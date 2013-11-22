@@ -372,7 +372,7 @@ vector<string>* PyParser::IdRest(vector<string>* lst) {
 }
 
 vector<string>* PyParser::GlobalsPart() {
-    vector<string>* globals = new vector<string > ();
+    vector<string>* globals = new vector<string>();
 
     PyToken* tok = in->getToken();
 
