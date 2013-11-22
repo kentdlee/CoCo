@@ -1,0 +1,31 @@
+#!/bin/bash
+# DO NOT EXECUTE THIS SCRIPT unless you have the automake tools installed, specifically
+# the autoreconf tool that is used below. See the README file for instructions on 
+# compiling the CoCo virtual machine
+if [ ! "`which autoreconf`" ]
+  then
+    echo "The autoreconf program could not be found."
+    echo "Install the correct package and then try to rebuild again."
+    autoreconf
+    exit
+fi
+rm -Rf autom4te.cache
+rm config.log
+rm config.status
+rm configure
+rm depcomp
+rm install-sh
+rm missing
+rm Makefile
+rm Makefile.in
+rm aclocal.m4
+rm *.o
+rm *~
+echo "bin_PROGRAMS = coco" > Makefile.am
+echo "coco_SOURCES =" *.cpp >> Makefile.am
+echo "AC_INIT([coco], [1.0], [kentdlee@gmail.com])" > configure.ac
+echo "AM_INIT_AUTOMAKE([-Wall -Werror foreign])" >> configure.ac
+echo "AC_PROG_CXX" >> configure.ac
+echo "AC_CONFIG_FILES([Makefile])" >> configure.ac
+echo "AC_OUTPUT" >> configure.ac
+autoreconf --force --install

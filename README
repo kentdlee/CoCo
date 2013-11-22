@@ -1,0 +1,87 @@
+Welcome to CoCo
+===============
+
+Welcome to the source code for the CoCo Virtual Machine. CoCo is an 
+implementation of the Python Virtual Machine in C++. CoCo is an 
+object-oriented implementation of the Python 3.2 virtual machine. 
+Documentation for writing programs for CoCo can be found on the 
+web at 
+
+http://cs.luther.edu/~leekent/CoCo
+
+There are a few differences in this implementation from the standard 
+Python Virtual Machine. Modules are not currently supported. Every 
+CoCo program must have a main function since execution starts at the
+main function. There are no global variables in CoCo. There are several
+extensions of CoCo that support functional programming languages like 
+Lisp-like lists, a print function that returns an instance of itself, 
+and a print that takes a tuple as its argument. 
+
+CoCo supports exceptions and exception handling, nested functions, looping,
+and symbolic target names for branches and jumps. 
+
+The Python programming language was named after Monty Python, a comedy 
+troupe from the UK that has passed the test of time. CoCo was named after
+the coconut carried by two African Sparrows in Monty Python and the Holy 
+Grail. Additionally, my first computer back in 1980 was a Radio Shack
+TRS-80 Color Computer, affectionately nicknamed CoCo. The original CoCo 
+had a Motorola 6809 processor and my first assembly language program was 
+written for this processor, which was NOT a virtual machine. Like the 6809
+assembly language that I learned back in 1980, the CoCo VM assembly language 
+is a worthwhile language to learn. Virtual machines have become very popular
+as embedded systems have proliferated everywhere. I hope you enjoy learning 
+to use it and extending it!
+
+  -- Kent D. Lee
+
+Compiling CoCo
+==============
+
+CoCo can be built for your platform if you have a C++ compiler and the 
+automake tools installed on your computer. The zip file can be downloaded 
+from Git Hub if you have not already done so. Alternatively, you can use 
+git to create a branch of the project. 
+
+To unzip the file, type
+
+unzip CoCo.zip
+
+Then, execute 
+
+cd CoCo
+./configure
+make
+
+If anything goes wrong or you add additional source files to the project,
+you can execute the rebuild script. However, you should be certain that you
+have the automake tools installed on your system in this case. In particular, 
+the autoreconf program is used in rebuilding the project. Running the 
+rebuild script will tell you what you need to install on most Linux 
+distributions. To rebuild run
+
+./rebuild
+./configure
+make
+
+Running CoCo
+============
+The coco binary can be installed wherever you like, preferably in your 
+path someplace.
+
+You can also download a binary from the website listed above for
+Mac OS X, Linux, or Microsoft Windows platforms. 
+
+To run coco simply type
+
+coco file.casm
+
+The file.casm is a file that you provide with a CoCo program in it. 
+A casm is a CoCo assembly language program and must be in the format 
+described at 
+
+http://cs.luther.edu/~leekent/CoCo
+
+There must be a main function in the casm file where CoCo will begin
+executing the Python Virtual Machine instructions. 
+
+Good luck and have fun writing CoCo programs!

@@ -1,0 +1,107 @@
+Function: main/0
+    Function: g/1
+        Function: f/0
+        Constants: None, 0, 1
+        Locals: result, count, x
+        FreeVars: aVal, fVal, lstInts
+        Globals: append
+        BEGIN
+                  BUILD_LIST                     0
+                  STORE_FAST                     0
+                  LOAD_CONST                     1
+                  STORE_FAST                     1
+                  SETUP_LOOP               label02
+                  LOAD_DEREF                     2
+                  GET_ITER                 
+        label00:  FOR_ITER                 label01
+                  STORE_FAST                     2
+                  LOAD_FAST                      0
+                  LOAD_ATTR                      0
+                  LOAD_FAST                      2
+                  LOAD_DEREF                     0
+                  LOAD_FAST                      1
+                  BINARY_MULTIPLY          
+                  BINARY_ADD               
+                  LOAD_DEREF                     1
+                  BINARY_ADD               
+                  CALL_FUNCTION                  1
+                  POP_TOP                  
+                  LOAD_FAST                      1
+                  LOAD_CONST                     2
+                  BINARY_ADD               
+                  STORE_FAST                     1
+                  JUMP_ABSOLUTE            label00
+        label01:  POP_BLOCK                
+        label02:  LOAD_FAST                      0
+                  RETURN_VALUE             
+        END
+    Constants: None, code(f), "Please enter another integer: "
+    Locals: aVal, f
+    FreeVars: lstInts
+    CellVars: aVal, fVal
+    Globals: int, input
+    BEGIN
+              LOAD_CLOSURE                   0
+              LOAD_CLOSURE                   1
+              LOAD_CLOSURE                   2
+              BUILD_TUPLE                    3
+              LOAD_CONST                     1
+              MAKE_CLOSURE                   0
+              STORE_FAST                     1
+              LOAD_GLOBAL                    0
+              LOAD_GLOBAL                    1
+              LOAD_CONST                     2
+              CALL_FUNCTION                  1
+              CALL_FUNCTION                  1
+              STORE_DEREF                    1
+              LOAD_FAST                      1
+              RETURN_VALUE             
+    END
+Constants: None, code(g), "Please enter a list of integers: ", 0, 6
+Locals: g, x, lst, y, fVal, myFun
+CellVars: lstInts
+Globals: input, split, append, int, print
+BEGIN
+          LOAD_CLOSURE                   0
+          BUILD_TUPLE                    1
+          LOAD_CONST                     1
+          MAKE_CLOSURE                   0
+          STORE_FAST                     0
+          LOAD_GLOBAL                    0
+          LOAD_CONST                     2
+          CALL_FUNCTION                  1
+          STORE_FAST                     1
+          LOAD_FAST                      1
+          LOAD_ATTR                      1
+          CALL_FUNCTION                  0
+          STORE_FAST                     2
+          BUILD_LIST                     0
+          STORE_DEREF                    0
+          SETUP_LOOP               label02
+          LOAD_FAST                      2
+          GET_ITER                 
+label00:  FOR_ITER                 label01
+          STORE_FAST                     3
+          LOAD_DEREF                     0
+          LOAD_ATTR                      2
+          LOAD_GLOBAL                    3
+          LOAD_FAST                      3
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          JUMP_ABSOLUTE            label00
+label01:  POP_BLOCK                
+label02:  LOAD_CONST                     3
+          STORE_FAST                     4
+          LOAD_FAST                      0
+          LOAD_CONST                     4
+          CALL_FUNCTION                  1
+          STORE_FAST                     5
+          LOAD_GLOBAL                    4
+          LOAD_FAST                      5
+          CALL_FUNCTION                  0
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END
