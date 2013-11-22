@@ -110,6 +110,10 @@ T PyStack<T>::pop() {
 		__PyStackElement<T>* elem = tos;
 		T val = elem->object;
 		tos = tos->next;
+                // The following line is needed to be able 
+                // to delete elem without deleting the rest
+                // of the stack. 
+                elem->next = NULL; 
 		delete elem;
                 count --;
 		return val;
