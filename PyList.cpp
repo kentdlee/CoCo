@@ -65,9 +65,9 @@ PyObject* PyList::getVal(int index) {
     return data[index];
 }
 
-PyObject* PyList::__index__(vector<PyObject*>* args) {
+PyObject* PyList::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __index__ method on list.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on list.");
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -79,6 +79,24 @@ PyObject* PyList::__index__(vector<PyObject*>* args) {
     }
     
     return data[index];
+}
+
+PyObject* PyList::__setitem__(vector<PyObject*>* args) {
+    if (args->size() != 2) {
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __setitem__ method on list.");
+    }
+    
+    PyInt* intObj = (PyInt*) (*args)[0];
+    
+    int index = intObj->getVal();
+    
+    if (index >= data.size()) {
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Index out of range.");
+    }
+    
+    data[index] = (*args)[1];
+    
+    return new PyNone();
 }
 
 PyObject* PyList::__len__(vector<PyObject*>* args) {

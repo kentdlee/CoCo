@@ -257,7 +257,7 @@ map<PyTypeId, PyType*> initTypes() {
     strType->addFun("__iter__", &PyObject::__iter__, 1);
     strType->addFun("__len__", &PyObject::__len__, 1);
     strType->addFun("__eq__", &PyObject::__eq__, 2);
-    strType->addFun("__index__", &PyObject::__index__, 2);
+    strType->addFun("__getitem__", &PyObject::__getitem__, 2);
     strType->addFun("split", &PyObject::split, 1);
 
     PyType* functionType = new PyType("function", PyFunctionType);
@@ -281,7 +281,7 @@ map<PyTypeId, PyType*> initTypes() {
     rangeType->addFun("__str__", &PyObject::__str__, 1);
     rangeType->addFun("__iter__", &PyObject::__iter__, 1);
     rangeType->addFun("__len__", &PyObject::__len__, 1);
-    rangeType->addFun("__index__", &PyObject::__index__, 2);
+    rangeType->addFun("__getitem__", &PyObject::__getitem__, 2);
 
     PyType* exceptionType = new PyExceptionType("Exception", PyExceptionTypeId);
     types[PyExceptionTypeId] = exceptionType;
@@ -305,7 +305,8 @@ map<PyTypeId, PyType*> initTypes() {
     listType->addFun("__str__", &PyObject::__str__, 1);
     listType->addFun("__iter__", &PyObject::__iter__, 1);
     listType->addFun("__len__", &PyObject::__len__, 1);
-    listType->addFun("__index__", &PyObject::__index__, 2);
+    listType->addFun("__getitem__", &PyObject::__getitem__, 2);
+    listType->addFun("__setitem__", &PyObject::__setitem__, 3);
     listType->addFun("append", &PyObject::append, 2);
 
     PyType* funListType = new PyType("funlist", PyFunListType);
@@ -315,7 +316,7 @@ map<PyTypeId, PyType*> initTypes() {
     funListType->addFun("__str__", &PyObject::__str__, 1);
     funListType->addFun("__iter__", &PyObject::__iter__, 1);
     funListType->addFun("__len__", &PyObject::__len__, 1);
-    funListType->addFun("__index__", &PyObject::__index__, 2);
+    funListType->addFun("__getitem__", &PyObject::__getitem__, 2);
     funListType->addFun("__add__", &PyObject::__add__, 2);
     funListType->addFun("head", &PyObject::head, 1);
     funListType->addFun("tail", &PyObject::tail, 1);
@@ -328,7 +329,7 @@ map<PyTypeId, PyType*> initTypes() {
     tupleType->addFun("__str__", &PyObject::__str__, 1);
     tupleType->addFun("__iter__", &PyObject::__iter__, 1);
     tupleType->addFun("__len__", &PyObject::__len__, 1);
-    tupleType->addFun("__index__", &PyObject::__index__, 2);
+    tupleType->addFun("__getitem__", &PyObject::__getitem__, 2);
 
     PyType* listIteratorType = new PyType("list_iterator", PyListIteratorType);
     types[PyListIteratorType] = listIteratorType;

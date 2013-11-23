@@ -53,9 +53,9 @@ string PyRange::toString() {
 }
 
 
-PyObject* PyRange::__index__(vector<PyObject*>* args) {
+PyObject* PyRange::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Invalid number of arguments for index of range object.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Invalid number of arguments for __getitem__ of range object.");
     }
     
     PyInt* indexObj = (PyInt*) (*args)[0];

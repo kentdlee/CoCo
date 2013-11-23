@@ -68,9 +68,9 @@ PyObject* PyTuple::getVal(int index) {
     return data[index];
 }
 
-PyObject* PyTuple::__index__(vector<PyObject*>* args) {
+PyObject* PyTuple::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __index__ method on tuple.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on tuple.");
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];

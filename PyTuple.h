@@ -40,7 +40,7 @@ public:
     PyObject* getVal(int index);
     int size();
     
-    PyObject* __index__(vector<PyObject*>* args);
+    PyObject* __getitem__(vector<PyObject*>* args);
     PyObject* __len__(vector<PyObject*>* args);
     PyObject* __iter__(vector<PyObject*>* args);
     

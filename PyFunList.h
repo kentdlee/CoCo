@@ -39,7 +39,7 @@ public:
     PyFunList* getTail();
     PyFunListElm* getElm(); /* Used ONLY by PyFunListIterator (should be friend) */
     
-    PyObject* __index__(vector<PyObject*>* args);
+    PyObject* __getitem__(vector<PyObject*>* args);
     PyObject* __len__(vector<PyObject*>* args);
     PyObject* __iter__(vector<PyObject*>* args);
     PyObject* __add__(vector<PyObject*>* args);

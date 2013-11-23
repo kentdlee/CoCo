@@ -157,9 +157,9 @@ PyObject* PyStr::split(vector<PyObject*>* args) {
     return new PyList(strObjs);
 }
 
-PyObject* PyStr::__index__(vector<PyObject*>* args) {
+PyObject* PyStr::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __index__ method on str.");
+        throw PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on str.");
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -176,6 +176,7 @@ PyObject* PyStr::__index__(vector<PyObject*>* args) {
     
     return new PyStr(s.str());
 }
+
 
 PyObject* PyStr::__len__(vector<PyObject*>* args) {
     return new PyInt(val.size());

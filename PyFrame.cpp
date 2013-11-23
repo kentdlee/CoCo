@@ -143,6 +143,8 @@ PyObject* PyFrame::execute() {
     while (true) {
         inst = code.getInstructions()[PC];
         //cerr << "Executing " << inst->getOpCodeName() << " at location " << PC << " in function " << code.getName() << endl;
+        //cerr << "Stack is here" << endl;
+        //cerr << opStack->toString() << endl;
         PC++;
         opcode = inst->getOpCode();
         operand = inst->getOperand();
@@ -444,8 +446,22 @@ PyObject* PyFrame::execute() {
                     args->push_back(u);
 
                     selfType = v->getType();
-                    w = selfType->call("__index__", v, args);
+                    w = selfType->call("__getitem__", v, args);
                     opStack->push(w);
+                    delete args;
+                    break;
+                    
+                case STORE_SUBSCR:
+                    u = safetyPop();
+                    v = safetyPop();
+                    w = safetyPop();
+                    args = new vector<PyObject*>();
+                    args->push_back(u); // the index
+                    args->push_back(w); // the item
+                    
+                    selfType = v->getType();
+                    w = selfType->call("__setitem__", v, args); // None is returned
+                    delete w;
                     delete args;
                     break;
 
@@ -533,7 +549,7 @@ PyObject* PyFrame::execute() {
                 case MAKE_CLOSURE:
                     u = safetyPop();
                     v = safetyPop();
-                    w = new PyFunction(*((PyCode*) u), globals, v);
+                    w = (*((PyCode*) u), globals, v);
                     opStack->push(w);
                     break;
 
@@ -552,14 +568,6 @@ PyObject* PyFrame::execute() {
                 case LOAD_DEREF:
                     cell = cellvars[getCellName(operand)];
                     opStack->push(cell->deref());
-                    break;
-
-                case STORE_SUBSCR:
-                    u = safetyPop();
-                    v = safetyPop();
-                    w = safetyPop();
-
-                    ((PyList*) v)->setVal(((PyInt*) u)->getVal(), w);
                     break;
 
                 case SETUP_EXCEPT:

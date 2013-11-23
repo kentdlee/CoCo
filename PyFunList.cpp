@@ -109,9 +109,9 @@ string PyFunList::toString() {
     return s.str();
 }
 
-PyObject* PyFunList::__index__(vector<PyObject*>* args) {
+PyObject* PyFunList::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __index__ method on list.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on list.");
     }
     
     if (data == NULL) {
