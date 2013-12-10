@@ -42,10 +42,10 @@
  * GlobalsPart ::= <null> | Globals colon IdList
  * BodyPart ::= BEGIN InstructionList END
  * InstructionList ::= <null> | LabeledInstruction InstructionList
- * LabeledInstruction ::= Identifier colon LabeledInstruction | UnaryInstruction | BinaryInstruction
- * UnaryInstruction ::= STOP_CODE | NOP | POP_TOP | ROT_TWO | ROT_THREE | ...
- * BinaryInstruction ::= BinaryMnemonic Integer | BinaryMnemonic Identifier
- * BinaryMnemonic ::= LOAD_CONST | STORE_FAST | SETUP_LOOP | COMPARE_OP | POP_JUMP_IF_FALSE | ...
+ * LabeledInstruction ::= Identifier colon LabeledInstruction | Instruction | OpInstruction
+ * Instruction ::= STOP_CODE | NOP | POP_TOP | ROT_TWO | ROT_THREE | ...
+ * OpInstruction ::= OpMnemonic Integer | OpMnemonic Identifier
+ * OpMnemonic ::= LOAD_CONST | STORE_FAST | SETUP_LOOP | COMPARE_OP | POP_JUMP_IF_FALSE | ...
  * ============================================================================
  * The implementation below cheats a little bit and combines the LabeledInstruction,
  * UnaryInstruction, BinaryInstruction, and BinaryMneomic non-terminals into
