@@ -175,7 +175,9 @@ PyCode* PyParser::FunDef() {
     if (numArgsToken->getType() != PYINTEGERTOKEN)
         badToken(numArgsToken, "Expected an integer for the argument count.");
 
-    istringstream(numArgsToken->getLex(), istringstream::in) >> numArgs;
+    istringstream numArgsIn(numArgsToken->getLex(), istringstream::in);
+    numArgsIn.exceptions(ios_base::failbit | ios_base::badbit);
+    numArgsIn >> numArgs;
 
     vector<PyCode*>* nestedFunctions = new vector<PyCode*>();
 
@@ -239,16 +241,23 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
     float fVal;
     string sVal;
     PyToken* codeId;
+    istringstream* tokStr;
 
     PyToken* tok = in->getToken();
 
     switch (tok->getType()) {
         case PYINTEGERTOKEN:
-            istringstream(tok->getLex()) >> iVal;
+            tokStr = new istringstream(tok->getLex());
+            tokStr->exceptions(ios_base::failbit | ios_base::badbit);
+            (*tokStr) >> iVal;
+            delete tokStr;
             return new PyInt(iVal);
             break;
         case PYFLOATTOKEN:
-            istringstream(tok->getLex()) >> fVal;
+            tokStr = new istringstream(tok->getLex());
+            tokStr->exceptions(ios_base::failbit | ios_base::badbit);
+            (*tokStr) >> fVal;
+            delete tokStr;
             return new PyFloat(fVal);
             break;
         case PYSTRINGTOKEN:
