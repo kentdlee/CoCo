@@ -49,22 +49,26 @@ PyObject* PyStr::__str__(vector<PyObject*>* args) {
 }
 
 PyObject* PyStr::__float__(vector<PyObject*>* args) {
-    float x;
+    double x;
     try {
-        istringstream(this->toString()) >> x;
+        istringstream in(this->toString());
+        in.exceptions(ios_base::failbit | ios_base::badbit);
+        in >> x;
         return new PyFloat(x);
     } catch (...) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"String to Float conversion error.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"could not convert string to float: '"+this->toString()+"'");
     }
 }
 
 PyObject* PyStr::__int__(vector<PyObject*>* args) {
     int x;
     try {
-        istringstream(this->toString()) >> x;
+        istringstream in(this->toString());
+        in.exceptions(ios_base::failbit | ios_base::badbit);
+        in >> x;
         return new PyInt(x);
     } catch (...) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"String to Int conversion error.");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"invalid literal for int() with base 10: '"+this->toString()+"'");
     }
 }
 
