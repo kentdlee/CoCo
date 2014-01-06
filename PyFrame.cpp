@@ -27,6 +27,7 @@
 #include "PyList.h"
 #include "PyFunList.h"
 #include "PyInt.h"
+#include "PyNone.h"
 #include <iostream>
 using namespace std;
 
@@ -627,11 +628,13 @@ PyObject* PyFrame::execute() {
                     break;
 
                 case DELETE_FAST:
-                    //The code below should be done, but generated code indicates that this 
-                    //nothing is done. This instruction only seems to happen during 
-                    //exception handling.
-                    //u = locals[code.getLocals()[operand]];
-                    //delete u;
+                    //The purpose of this instruction is a bit tricky. If an 
+                    //exception happens during the handling of another 
+                    //exception, the exception's variable reference will be 
+                    //pointing at the first exception. We set it to None
+                    //here to allow the garbage collector to collect its space.
+                   
+                    locals[code.getLocals()[operand]] = new PyNone();
                     break;
 
                 default:
