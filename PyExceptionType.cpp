@@ -32,7 +32,6 @@ PyExceptionType::~PyExceptionType() {
 // return true for count == 1. However, PyType also at one time returned
 // true for count == 3. Can't figure out why that was needed. May have been
 // left over from a previous revision. Anyway, we'll leave this method here.
-// Either way, it would have to be virtual otherwise. 
 bool PyExceptionType::allowableArgCount(int count) {
     return count == 1;
 }
