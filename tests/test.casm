@@ -1,0 +1,25 @@
+        Function: main/0
+        Constants: None, 7, 6
+        Locals: x, y
+        Globals: print
+        BEGIN
+                  SETUP_LOOP               label01
+                  LOAD_CONST                     1
+                  STORE_FAST                     0
+                  LOAD_CONST                     2
+                  STORE_FAST                     1
+                  LOAD_FAST                      0
+                  LOAD_FAST                      1
+                  COMPARE_OP                     1
+                  POP_JUMP_IF_TRUE         label00
+                  BREAK_LOOP
+                  LOAD_GLOBAL                    0
+                  LOAD_FAST                      0
+                  CALL_FUNCTION                  1
+                  POP_TOP                  
+        label00:  POP_BLOCK
+        label01:  LOAD_GLOBAL                    0
+                  LOAD_FAST                      1
+                  CALL_FUNCTION                  1
+                  RETURN_VALUE             
+        END 

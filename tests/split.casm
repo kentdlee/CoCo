@@ -1,0 +1,20 @@
+Function: main/0
+Constants: None, "Enter a list of integers:"
+Locals: s, lst
+Globals: input, split, print
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_FAST                      0
+          LOAD_ATTR                      1
+          CALL_FUNCTION                  0
+          STORE_FAST                     1
+          LOAD_GLOBAL                    2
+          LOAD_FAST                      1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END
