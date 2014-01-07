@@ -31,5 +31,5 @@ def main():
     
     print(myFun())
 
-#disassemble(main)
-main()       
+disassemble(main)
+#main()       

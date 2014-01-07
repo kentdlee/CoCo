@@ -1,0 +1,56 @@
+Function: main/0
+Constants: None, "Enter a number: ", "/", "="
+Locals: x, y, z, ex
+Globals: float, input, print, Exception
+BEGIN
+          SETUP_EXCEPT             label00
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          STORE_FAST                     1
+          LOAD_FAST                      0
+          LOAD_FAST                      1
+          BINARY_TRUE_DIVIDE       
+          STORE_FAST                     2
+          LOAD_GLOBAL                    2
+          LOAD_FAST                      0
+          LOAD_CONST                     2
+          LOAD_FAST                      1
+          LOAD_CONST                     3
+          LOAD_FAST                      2
+          CALL_FUNCTION                  5
+          POP_TOP                  
+          POP_BLOCK                
+          JUMP_FORWARD             label03
+label00:  DUP_TOP                  
+          LOAD_GLOBAL                    3
+          COMPARE_OP                    10
+          POP_JUMP_IF_FALSE        label02
+          POP_TOP                  
+          STORE_FAST                     3
+          POP_TOP                  
+          SETUP_FINALLY            label01
+          LOAD_GLOBAL                    2
+          LOAD_FAST                      3
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          POP_BLOCK                
+          POP_EXCEPT               
+          LOAD_CONST                     0
+label01:  LOAD_CONST                     0
+          STORE_FAST                     3
+          DELETE_FAST                    3
+          END_FINALLY              
+          JUMP_FORWARD             label03
+label02:  END_FINALLY              
+label03:  LOAD_CONST                     0
+          RETURN_VALUE             
+END

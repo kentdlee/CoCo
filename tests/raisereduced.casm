@@ -1,0 +1,20 @@
+Function: main/0
+Constants: None, "Hello World!"
+Locals: ex
+Globals: Exception, print
+BEGIN
+          SETUP_EXCEPT             label00
+          LOAD_GLOBAL                    0
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          RAISE_VARARGS                  1
+          POP_BLOCK                
+          JUMP_FORWARD             label01
+label00:  LOAD_GLOBAL                    1
+          ROT_TWO
+          CALL_FUNCTION                  1
+          POP_TOP                                  
+          POP_EXCEPT               
+label01:  LOAD_CONST                     0
+          RETURN_VALUE             
+END
