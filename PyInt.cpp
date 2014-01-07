@@ -65,9 +65,11 @@ int PyInt::getVal() {
 PyObject* PyInt::__add__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyObject* arg = (*args)[0];
@@ -87,9 +89,11 @@ PyObject* PyInt::__add__(vector<PyObject*>* args) {
 PyObject* PyInt::__sub__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
+    ostringstream msg;
     
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyObject* arg = (*args)[0];
@@ -109,9 +113,11 @@ PyObject* PyInt::__sub__(vector<PyObject*>* args) {
 PyObject* PyInt::__mul__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyObject* arg = (*args)[0];
@@ -133,9 +139,11 @@ PyObject* PyInt::__mul__(vector<PyObject*>* args) {
 PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyObject* arg = (*args)[0];
@@ -161,9 +169,11 @@ PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
 PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyObject* arg = (*args)[0];
@@ -188,8 +198,11 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
 }
 
 PyObject* PyInt::__eq__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     //We should check the type of args[0] before casting it. 
@@ -199,8 +212,11 @@ PyObject* PyInt::__eq__(vector<PyObject*>* args) {
 }
 
 PyObject* PyInt::__lt__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     //We should check the type of args[0] before casting it. 
@@ -211,8 +227,11 @@ PyObject* PyInt::__lt__(vector<PyObject*>* args) {
 
 
 PyObject* PyInt::__gt__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     //We should check the type of args[0] before casting it. 
@@ -223,8 +242,11 @@ PyObject* PyInt::__gt__(vector<PyObject*>* args) {
 
 
 PyObject* PyInt::__le__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     //We should check the type of args[0] before casting it. 
@@ -235,8 +257,11 @@ PyObject* PyInt::__le__(vector<PyObject*>* args) {
 
 
 PyObject* PyInt::__ge__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     //We should check the type of args[0] before casting it. 
@@ -250,24 +275,33 @@ PyType* PyInt::getType() {
 }
 
 PyObject* PyInt::__float__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return new PyFloat(this->getVal());
 }
 
 PyObject* PyInt::__int__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return this;
 }
 
 PyObject* PyInt::__bool__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     if (this->getVal() == 0)

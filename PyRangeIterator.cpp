@@ -37,8 +37,11 @@ PyType* PyRangeIterator::getType() {
 }
 
 PyObject* PyRangeIterator::__iter__(vector<PyObject*>* args) {
+    ostringstream msg; 
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return this;
@@ -53,8 +56,11 @@ string PyRangeIterator::toString() {
 }
 
 PyObject* PyRangeIterator::__next__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     PyObject* result = this->rangeObj->indexOf(index);

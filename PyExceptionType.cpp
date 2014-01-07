@@ -21,6 +21,9 @@
 #include "PyType.h"
 #include "PyStr.h"
 #include "PyInt.h"
+#include <sstream>
+
+using namespace std;
 
 PyExceptionType::PyExceptionType(string typeString, PyTypeId id): PyType(typeString, id) {
 }
@@ -29,8 +32,11 @@ PyExceptionType::~PyExceptionType() {
 }
 
 PyObject* PyExceptionType::__call__(vector<PyObject*>* args) {
+	ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return new PyException(PYEXCEPTION,(*args)[0]);

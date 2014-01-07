@@ -18,6 +18,9 @@
 
 #include "PyBuiltInIter.h"
 #include "PyException.h"
+#include <sstream>
+
+ using namespace std;
 
 PyBuiltInIter::PyBuiltInIter() : PyCallable() {
 }
@@ -35,9 +38,11 @@ PyType* PyBuiltInIter::getType() {
 PyObject* PyBuiltInIter::__call__(vector<PyObject*>* args) {
     vector<PyObject*>* iterArgs = new vector<PyObject*>();
     PyObject* x;
+    ostringstream msg;
     
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());   
     }
     
     x = (*args)[0];

@@ -41,9 +41,11 @@ PyObject* PyBuiltInInput::__call__(vector<PyObject*>* args) {
     PyStr* y;
     string input;
     char buffer[256];
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+         msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
     
     x = (*args)[0];

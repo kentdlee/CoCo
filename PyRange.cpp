@@ -58,8 +58,11 @@ string PyRange::toString() {
 
 
 PyObject* PyRange::__getitem__(vector<PyObject*>* args) {
+    ostringstream msg;
+    
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyInt* indexObj = (PyInt*) (*args)[0];

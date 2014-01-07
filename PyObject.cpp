@@ -21,6 +21,7 @@
 #include "PyStr.h"
 #include <iostream>
 #include "PyType.h"
+#include <sstream>
 using namespace std;
 
 ostream &operator <<(ostream &os, PyObject &t) {
@@ -37,7 +38,7 @@ PyObject* PyObject::callMethod(string name, vector<PyObject*>* args) {
     
     if (dict.find(name) == dict.end()) {
         // If we lookup the magic method and don't find it, raise an exception.
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "TypeError: '"+ getType()->toString() + "' object has not attribute '" + name + "'");
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "TypeError: '"+ getType()->toString() + "' object has no attribute '" + name + "'");
     }
     
     // Set the mbr pointer to the function's address.
@@ -89,16 +90,22 @@ bool PyObject::isCallable() const {
 }
 
 PyObject* PyObject::__str__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return new PyStr(toString());
 }
 
 PyObject* PyObject::__type__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return (PyObject*)this->getType();

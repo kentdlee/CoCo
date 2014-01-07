@@ -46,16 +46,22 @@ string PyListIterator::toString() {
 }
 
 PyObject* PyListIterator::__iter__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return this;
 }
 
 PyObject* PyListIterator::__next__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return lst->getVal(index++);

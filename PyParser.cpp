@@ -302,6 +302,8 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
             badToken(tok, "Expected None, int, float, str, True, or False.");
             break;
     }
+
+    return NULL; // This won't happen, but C++ OS X compiler warns without. 
 }
 
 vector<string>* PyParser::LocalsPart() {
@@ -501,5 +503,7 @@ PyByteCode* PyParser::LabeledInstruction() {
     }
 
     badToken(tok1, "Instruction Syntax Error.");
+
+    return NULL; // This won't happen but C++ OS X compiler warns without. 
 }
 

@@ -21,6 +21,7 @@
 #include "PyException.h"
 #include "PyStr.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 PyType::PyType(string typeString, PyTypeId id) : PyCallable() {
@@ -59,8 +60,11 @@ PyObject* PyType::__str__(vector<PyObject*>* args) {
 }
 
 PyObject* PyType::__type__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return PyTypes[PyTypeType];
@@ -79,8 +83,11 @@ PyObject* PyType::__type__(vector<PyObject*>* args) {
  */
 
 PyObject* PyType::__call__(vector<PyObject*>* args) {
+    ostringstream msg; 
+    
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     vector<PyObject*>* emptyArgs = new vector<PyObject*>();

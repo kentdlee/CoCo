@@ -23,6 +23,7 @@
 #include "PyFloat.h"
 
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 PyBool::PyBool() : PyObject() {
@@ -53,8 +54,11 @@ string PyBool::toString() {
 }
 
 PyObject* PyBool::__eq__(vector<PyObject*>* args) {
+    ostringstream msg; 
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
 
     PyBool* other = (PyBool*) (*args)[0];
@@ -72,9 +76,11 @@ bool PyBool::getVal() {
 
 
 PyObject* PyBool::__float__(vector<PyObject*>* args) { 
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
-    }
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());    }
     
     if (this->getVal())
         return new PyFloat(1);
@@ -83,9 +89,11 @@ PyObject* PyBool::__float__(vector<PyObject*>* args) {
 }
 
 PyObject* PyBool::__int__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
-    }
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());    }
     
     if (this->getVal())
         return new PyInt(1);

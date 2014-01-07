@@ -22,6 +22,7 @@
 #include "PyList.h"
 #include "PyBool.h"
 #include <map>
+#include <sstream>
 using namespace std;
 
 struct names {
@@ -81,9 +82,11 @@ void PyException::tracebackAppend(PyFrame* frame) {
 }
 
 PyObject* PyException::__excmatch__(vector<PyObject*>* args) {
+    ostringstream msg;
+    
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
-    }
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());      }
     
     PyObject* arg = (*args)[0];
     

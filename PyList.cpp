@@ -72,8 +72,11 @@ PyObject* PyList::getVal(int index) {
 }
 
 PyObject* PyList::__getitem__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -88,8 +91,11 @@ PyObject* PyList::__getitem__(vector<PyObject*>* args) {
 }
 
 PyObject* PyList::__setitem__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 2) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 2 arguments, got " + args->size());
+        msg << "TypeError: expected 2 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -106,16 +112,22 @@ PyObject* PyList::__setitem__(vector<PyObject*>* args) {
 }
 
 PyObject* PyList::__len__(vector<PyObject*>* args) {
+    ostringstream msg;
+
     if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return new PyInt(data.size());
 }
 
 PyObject* PyList::__iter__(vector<PyObject*>* args) {
-    if (args->size() != 0) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    ostringstream msg;
+
+    if (args->size() != 0) {        
+        msg << "TypeError: expected 0 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
     return new PyListIterator(this);

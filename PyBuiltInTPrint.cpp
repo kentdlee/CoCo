@@ -77,9 +77,11 @@ PyObject* PyBuiltInTPrint::__call__(vector<PyObject*>* args) {
     PyObject* x;
     PyObject* w;
     vector<PyObject*>* strargs = new vector<PyObject*>();
+    ostringstream msg;
 
     if (args->size() != 1) {
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
 
     PyObject* arg = (*args)[0];
