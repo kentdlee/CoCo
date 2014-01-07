@@ -96,7 +96,7 @@ PyObject* PyFloat::__bool__(vector<PyObject*>* args) {
     ostringstream msg;
     
     if (args->size() != 0) {
-        msg << "TypeError: expected 1 arguments, got " << args->size();
+        msg << "TypeError: expected 0 arguments, got " << args->size();
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
