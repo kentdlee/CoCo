@@ -28,12 +28,31 @@ ostream &operator <<(ostream &os, PyObject &t) {
 }
 
 PyObject* PyObject::callMethod(string name, vector<PyObject*>* args) {
+    // This is where the magic happens. The declaration below declares mbr
+    // as a member function pointer to a method that takes a pointer to a 
+    // vector of PyObject pointers as its argument and returns a PyObject 
+    // pointer. All magic methods and method calls in CoCo adhere to this 
+    // strict function call type. 
     PyObject* (PyObject::*mbr)(vector<PyObject*>*);
+    
     if (dict.find(name) == dict.end()) {
+        // If we lookup the magic method and don't find it, raise an exception.
         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "TypeError: '"+ getType()->toString() + "' object has not attribute '" + name + "'");
     }
     
-    mbr = dict[name];    
+    // Set the mbr pointer to the function's address.
+    mbr = dict[name]; 
+    
+    // Here is how to call the function. First, mbr is a method of 
+    // the current class, whether a sub-class or not. Sub-classes will 
+    // automatically work with this code. So, we dereference this to get
+    // into the object. Then we dereference mbr to get to the method's code
+    // and finally pass the args to the method. This is very slick since
+    // it works on any subclass that defines a magic method. Because all 
+    // magic methods are implemented as virtual functions, this works means
+    // if a base class defines a magic method, subclasses automatically pick
+    // up that functionality. 
+    
     return (this->*mbr)(args);
 }
 
