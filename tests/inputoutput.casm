@@ -1,0 +1,27 @@
+Function: main/0
+Constants: None, "Please enter an integer: ", "Please enter a number: ", "The product is"
+Locals: x, y
+Globals: int, input, float, print
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_GLOBAL                    2
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     2
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          STORE_FAST                     1
+          LOAD_GLOBAL                    3
+          LOAD_CONST                     3
+          LOAD_FAST                      0
+          LOAD_FAST                      1
+          BINARY_MULTIPLY          
+          CALL_FUNCTION                  2
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END
