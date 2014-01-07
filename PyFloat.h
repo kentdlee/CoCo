@@ -28,13 +28,13 @@ public:
     PyType* getType();
     double getVal();
 
-    PyObject* __add__(vector<PyObject*>* args);
-    PyObject* __float__(vector<PyObject*>* args);
-    PyObject* __int__(vector<PyObject*>* args);
-    PyObject* __bool__(vector<PyObject*>* args);
-private:
+protected:
     double val;
 
+    virtual PyObject* __add__(vector<PyObject*>* args);
+    virtual PyObject* __float__(vector<PyObject*>* args);
+    virtual PyObject* __int__(vector<PyObject*>* args);
+    virtual PyObject* __bool__(vector<PyObject*>* args);
 };
 
 #endif	/* PYFLOAT_H */

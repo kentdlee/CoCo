@@ -24,7 +24,8 @@ using namespace std;
 
 PyCode::PyCode(string name, vector<PyCode*>* nestedFuns, vector<PyObject*>* consts,
         vector<string>* locals, vector<string>* freevars, vector<string>* cellvars,
-        vector<string>* globals, vector<PyByteCode*>* code, int argcount) {
+        vector<string>* globals, vector<PyByteCode*>* code, int argcount) :
+        PyObject() {
     this->name = name;
     this->locals = locals;
     this->freevars = freevars;

@@ -30,11 +30,10 @@ class PyExceptionType : public PyType {
 public:
     PyExceptionType(string typeString, PyTypeId id);
     virtual ~PyExceptionType();
-    bool allowableArgCount(int count);
-    PyObject* __call__(vector<PyObject*>* args);    
+    bool allowableArgCount(int count); 
     
-private:
-
+protected:
+    PyObject* __call__(vector<PyObject*>* args); 
 };
 
 #endif	/* PYEXCEPTIONTYPE_H */

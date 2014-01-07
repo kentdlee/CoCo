@@ -21,9 +21,12 @@
 #include <sstream>
 using namespace std;
 
-PyRangeIterator::PyRangeIterator(PyRange* obj) {
+PyRangeIterator::PyRangeIterator(PyRange* obj) : PyObject() {
     rangeObj = obj;
     index = 0;
+    
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRangeIterator::__iter__);
+    dict["__next__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRangeIterator::__next__);
 }
 
 PyRangeIterator::~PyRangeIterator() {
@@ -34,6 +37,10 @@ PyType* PyRangeIterator::getType() {
 }
 
 PyObject* PyRangeIterator::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
@@ -47,7 +54,7 @@ string PyRangeIterator::toString() {
 
 PyObject* PyRangeIterator::__next__(vector<PyObject*>* args) {
     if (args->size() != 0) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of args for range iterator");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
     }
 
     PyObject* result = this->rangeObj->indexOf(index);

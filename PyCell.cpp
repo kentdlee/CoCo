@@ -17,7 +17,7 @@
 
 #include "PyCell.h"
 
-PyCell::PyCell(PyObject* ref) {
+PyCell::PyCell(PyObject* ref) : PyObject() {
     this->ref = ref;
 }
 

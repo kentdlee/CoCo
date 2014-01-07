@@ -28,18 +28,16 @@ using namespace std;
 class PyTupleIterator : public PyObject {
 public:
     PyTupleIterator(PyTuple* lst);
-    virtual ~PyTupleIterator();
-    
+    virtual ~PyTupleIterator();  
     PyType* getType();
     string toString();
     
-    PyObject* __iter__(vector<PyObject*>* args);
-    PyObject* __next__(vector<PyObject*>* args);
-private:
+protected:
     PyTuple* lst;
     int index;
     
-
+    virtual PyObject* __iter__(vector<PyObject*>* args);
+    virtual PyObject* __next__(vector<PyObject*>* args);
 };
 
 

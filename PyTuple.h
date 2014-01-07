@@ -40,12 +40,14 @@ public:
     PyObject* getVal(int index);
     int size();
     
-    PyObject* __getitem__(vector<PyObject*>* args);
-    PyObject* __len__(vector<PyObject*>* args);
-    PyObject* __iter__(vector<PyObject*>* args);
+
     
-private:
+protected:
     vector<PyObject*> data;
+
+    virtual PyObject* __getitem__(vector<PyObject*>* args);
+    virtual PyObject* __len__(vector<PyObject*>* args);
+    virtual PyObject* __iter__(vector<PyObject*>* args);
 };
 
 

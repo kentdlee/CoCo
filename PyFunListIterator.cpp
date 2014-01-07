@@ -23,8 +23,11 @@
 #include <string>
 using namespace std;
 
-PyFunListIterator::PyFunListIterator(PyFunList* lst) {
+PyFunListIterator::PyFunListIterator(PyFunList* lst) : PyObject() {
     this->elm = lst->getElm();
+  
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunListIterator::__iter__);
+    dict["__next__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunListIterator::__next__);
 }
 
 PyFunListIterator::~PyFunListIterator() {
@@ -43,10 +46,18 @@ string PyFunListIterator::toString() {
 }
 
 PyObject* PyFunListIterator::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
 PyObject* PyFunListIterator::__next__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     if (elm == NULL) {
         throw new PyException(PYSTOPITERATIONEXCEPTION, "Stopping Iteration");
     }

@@ -17,13 +17,17 @@
  */
 
 #include "PyStrIterator.h"
+#include "PyException.h"
 #include "PyStr.h"
 #include <sstream>
 using namespace std;
 
-PyStrIterator::PyStrIterator(PyStr* str) {
+PyStrIterator::PyStrIterator(PyStr* str) : PyObject() {
     this->str = str;
     this->index = 0;
+    
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStrIterator::__iter__);
+    dict["__next__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStrIterator::__next__);
 }
 
 PyStrIterator::~PyStrIterator() {
@@ -42,9 +46,17 @@ string PyStrIterator::toString() {
 }
 
 PyObject* PyStrIterator::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
 PyObject* PyStrIterator::__next__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return str->charAt(index++);
 }

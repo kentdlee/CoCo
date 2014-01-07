@@ -16,8 +16,10 @@
  */
 
 #include "PyCallable.h"
+#include "PyException.h"
 
-PyCallable::PyCallable() {
+PyCallable::PyCallable() : PyObject() {
+    dict["__call__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyCallable::__call__);
 }
 
 PyCallable::PyCallable(const PyCallable& orig) {
@@ -28,4 +30,8 @@ PyCallable::~PyCallable() {
 
 bool PyCallable::isCallable() const {
     return true;
+}
+
+PyObject* PyCallable::__call__(vector<PyObject*>* args) {
+    throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal call of Callable Base Class");
 }

@@ -68,25 +68,56 @@ int PyFunListElm::getLen() {
     return len;
 }
 
-PyFunList::PyFunList(vector<PyObject*>* lst) {
+PyFunList::PyFunList(vector<PyObject*>* lst) : PyObject() {
     int k;
     PyFunListElm* tmp = NULL;
     for (k=lst->size()-1;k>=0;k--) {
         tmp = new PyFunListElm((*lst)[k],tmp);
     }
     data = tmp;
+    
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__iter__);
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__add__);
+    dict["head"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::head);
+    dict["tail"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::tail);
+    dict["concat"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::concat);
 }
 
-PyFunList::PyFunList() {
+PyFunList::PyFunList() : PyObject() {
     data = NULL;
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__iter__);
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__add__);
+    dict["head"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::head);
+    dict["tail"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::tail);
+    dict["concat"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::concat);  
 }
 
-PyFunList::PyFunList(PyObject* h, PyFunList* t) {
+PyFunList::PyFunList(PyObject* h, PyFunList* t) : PyObject() {
     data = new PyFunListElm(h,t->getElm());
+    
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__iter__);
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__add__);
+    dict["head"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::head);
+    dict["tail"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::tail);
+    dict["concat"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::concat);
 }
 
-PyFunList::PyFunList(PyFunListElm* elm) {
+PyFunList::PyFunList(PyFunListElm* elm) : PyObject() {
     data = elm;
+    
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__iter__);
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::__add__);
+    dict["head"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::head);
+    dict["tail"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::tail);
+    dict["concat"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFunList::concat);
 }
 
 PyFunList::~PyFunList() {
@@ -111,7 +142,7 @@ string PyFunList::toString() {
 
 PyObject* PyFunList::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on list.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
     
     if (data == NULL) {
@@ -136,6 +167,10 @@ PyObject* PyFunList::__getitem__(vector<PyObject*>* args) {
 }
 
 PyObject* PyFunList::__len__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     if (data == NULL) {
         return new PyInt(0);
     }
@@ -144,10 +179,18 @@ PyObject* PyFunList::__len__(vector<PyObject*>* args) {
 }
 
 PyObject* PyFunList::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyFunListIterator(this);
 }
 
 PyObject* PyFunList::__add__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyFunList* other = (PyFunList*)(*args)[0];
     PyStack<PyObject*> tmpStack;
     PyFunListElm* tmp = data;
@@ -189,14 +232,26 @@ PyFunList* PyFunList::getTail() {
 }
 
 PyObject* PyFunList::head(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return getHead();
 }
 
 PyObject* PyFunList::tail(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return getTail();
 }
 
 PyObject* PyFunList::concat(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     ostringstream s;
     
     PyFunListElm* tmp = data;

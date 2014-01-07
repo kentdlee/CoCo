@@ -17,13 +17,17 @@
  */
 
 #include "PyListIterator.h"
+#include "PyException.h"
 #include <sstream>
 #include <string>
 using namespace std;
 
-PyListIterator::PyListIterator(PyList* lst) {
+PyListIterator::PyListIterator(PyList* lst) : PyObject() {
     this->index = 0;
     this->lst = lst;
+    
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyListIterator::__iter__);
+    dict["__next__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyListIterator::__next__);
 }
 
 PyListIterator::~PyListIterator() {
@@ -42,9 +46,17 @@ string PyListIterator::toString() {
 }
 
 PyObject* PyListIterator::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
 PyObject* PyListIterator::__next__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return lst->getVal(index++);
 }

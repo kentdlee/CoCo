@@ -24,7 +24,7 @@
 #include <vector>
 using namespace std;
 
-PyBuiltInLen::PyBuiltInLen() {
+PyBuiltInLen::PyBuiltInLen() : PyCallable() {
 }
 
 PyBuiltInLen::PyBuiltInLen(const PyBuiltInLen& orig) {
@@ -39,18 +39,16 @@ PyType* PyBuiltInLen::getType() {
 
 PyObject* PyBuiltInLen::__call__(vector<PyObject*>* args) {
     PyObject* x;
+    
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
 
     x = (*args)[0];
     
     vector<PyObject*>* callArgs = new vector<PyObject*>();
     
-    PyType* selfType = x->getType();
-    
-    return selfType->call("__len__",x,callArgs);
-}
-
-bool PyBuiltInLen::allowableArgCount(int count) {
-    return count == 1;
+    return x->callMethod("__len__",callArgs);
 }
 
 string PyBuiltInLen::callName() {

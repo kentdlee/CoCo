@@ -42,10 +42,12 @@ struct names {
 
 static map<int, string> excnames = names::create_map();
 
-PyException::PyException(int exception, PyObject* v) : exceptionType(exception), val(v) {
+PyException::PyException(int exception, PyObject* v) : PyObject(), exceptionType(exception), val(v) {
+    dict["__excmatch__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyException::__excmatch__);
 }
 
-PyException::PyException(int exception, string msg) : exceptionType(exception), val(new PyStr(msg)) {
+PyException::PyException(int exception, string msg) : PyObject(), exceptionType(exception), val(new PyStr(msg)) {
+    dict["__excmatch__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyException::__excmatch__);
 }
 
 
@@ -61,7 +63,6 @@ int PyException::getExceptionType() {
 
 string PyException::toString() {
     return val->toString();
-    //return excnames[exceptionType] + ": " + val->toString();
 }
 
 PyType* PyException::getType() {
@@ -80,6 +81,10 @@ void PyException::tracebackAppend(PyFrame* frame) {
 }
 
 PyObject* PyException::__excmatch__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
     
     return new PyBool(this->getType() == arg);

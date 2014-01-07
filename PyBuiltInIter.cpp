@@ -17,8 +17,9 @@
  */
 
 #include "PyBuiltInIter.h"
+#include "PyException.h"
 
-PyBuiltInIter::PyBuiltInIter() {
+PyBuiltInIter::PyBuiltInIter() : PyCallable() {
 }
 
 PyBuiltInIter::PyBuiltInIter(const PyBuiltInIter& orig) {
@@ -35,17 +36,15 @@ PyObject* PyBuiltInIter::__call__(vector<PyObject*>* args) {
     vector<PyObject*>* iterArgs = new vector<PyObject*>();
     PyObject* x;
     
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     x = (*args)[0];
     
-    PyType* selfType = x->getType();
-    
-    PyObject* result = selfType->call("__iter__",x,iterArgs);
+    PyObject* result = x->callMethod("__iter__",iterArgs);
     
     return result;
-}
-
-bool PyBuiltInIter::allowableArgCount(int count) {
-    return count == 1;
 }
 
 string PyBuiltInIter::callName() {

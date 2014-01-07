@@ -27,16 +27,15 @@ using namespace std;
 class PyFunListIterator : public PyObject {
 public:
     PyFunListIterator(PyFunList* lst);
-    virtual ~PyFunListIterator();
-    
+    virtual ~PyFunListIterator();  
     PyType* getType();
     string toString();
-    
-    PyObject* __iter__(vector<PyObject*>* args);
-    PyObject* __next__(vector<PyObject*>* args);
-private:
+
+protected:
     PyFunListElm* elm;
-    
+
+    virtual PyObject* __iter__(vector<PyObject*>* args);
+    virtual PyObject* __next__(vector<PyObject*>* args);    
 
 };
 

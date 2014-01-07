@@ -32,15 +32,15 @@ public:
     virtual ~PyAttr();
     bool allowableArgCount(int count);
     virtual string callName();
-    PyObject* __call__(vector<PyObject*>* args);
-    PyObject* __str__(vector<PyObject*>* args);
-    PyObject* __type__(vector<PyObject*>* args);
+
     PyType* getType();
     string toString();
-private: 
+    
+protected: 
     string method;
     PyObject* self;
 
+    virtual PyObject* __call__(vector<PyObject*>* args);
 };
 
 #endif	/* PYATTR_H */

@@ -25,7 +25,7 @@
 #include <sstream>
 using namespace std;
 
-PyBuiltInTPrint::PyBuiltInTPrint() {
+PyBuiltInTPrint::PyBuiltInTPrint() : PyCallable() {
 }
 
 PyBuiltInTPrint::PyBuiltInTPrint(const PyBuiltInTPrint& orig) {
@@ -79,7 +79,7 @@ PyObject* PyBuiltInTPrint::__call__(vector<PyObject*>* args) {
     vector<PyObject*>* strargs = new vector<PyObject*>();
 
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments for fprint. Only 1 allowed, which may be a tuple.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     PyObject* arg = (*args)[0];
@@ -90,8 +90,7 @@ PyObject* PyBuiltInTPrint::__call__(vector<PyObject*>* args) {
 
         for (int i = tup->size() - 1; i >= 0; i--) {
             x = tup->getVal(i);
-            PyType* selfType = x->getType();
-            w = selfType->call("__str__", x, strargs);
+            w = x->callMethod("__str__", strargs);
             if (x->getType()->typeId() == PyStrType)
                 output = process(w->toString()) + output;
             else
@@ -110,10 +109,6 @@ PyObject* PyBuiltInTPrint::__call__(vector<PyObject*>* args) {
     cout << output << endl;
 
     return new PyNone();
-}
-
-bool PyBuiltInTPrint::allowableArgCount(int count) {
-    return true;
 }
 
 string PyBuiltInTPrint::callName() {

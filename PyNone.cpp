@@ -20,17 +20,13 @@
 #include "PyType.h"
 #include "PyStr.h"
 
-PyNone::PyNone() {
+PyNone::PyNone() : PyObject() {
 }
 
 PyNone::PyNone(const PyNone& orig) {
 }
 
 PyNone::~PyNone() {
-}
-
-PyObject* PyNone::__str__(vector<PyObject*>* args) {
-    return new PyStr("None");
 }
 
 PyType* PyNone::getType() {

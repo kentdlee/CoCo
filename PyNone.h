@@ -29,9 +29,7 @@ public:
     PyType* getType();
     string toString();
     
-    PyObject* __str__(vector<PyObject*>* args);
-    
-private:
+protected:
 
 };
 

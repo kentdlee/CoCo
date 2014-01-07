@@ -24,7 +24,7 @@
 #include <vector>
 using namespace std;
 
-PyBuiltInConcat::PyBuiltInConcat() {
+PyBuiltInConcat::PyBuiltInConcat() : PyCallable() {
 }
 
 PyBuiltInConcat::PyBuiltInConcat(const PyBuiltInConcat& orig) {
@@ -38,19 +38,17 @@ PyType* PyBuiltInConcat::getType() {
 }
 
 PyObject* PyBuiltInConcat::__call__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* x;
 
     x = (*args)[0];
     
     vector<PyObject*>* callArgs = new vector<PyObject*>();
     
-    PyType* selfType = x->getType();
-    
-    return selfType->call("concat",x,callArgs);
-}
-
-bool PyBuiltInConcat::allowableArgCount(int count) {
-    return count == 1;
+    return x->callMethod("concat",callArgs);
 }
 
 string PyBuiltInConcat::callName() {

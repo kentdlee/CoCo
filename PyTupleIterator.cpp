@@ -17,13 +17,17 @@
  */
 
 #include "PyTupleIterator.h"
+#include "PyException.h"
 #include <sstream>
 #include <string>
 using namespace std;
 
-PyTupleIterator::PyTupleIterator(PyTuple* lst) {
+PyTupleIterator::PyTupleIterator(PyTuple* lst) : PyObject() {
     this->index = 0;
     this->lst = lst;
+    
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyTupleIterator::__iter__);
+    dict["__next__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyTupleIterator::__next__);
 }
 
 PyTupleIterator::~PyTupleIterator() {
@@ -42,10 +46,18 @@ string PyTupleIterator::toString() {
 }
 
 PyObject* PyTupleIterator::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
 PyObject* PyTupleIterator::__next__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return lst->getVal(index++);
 }
 

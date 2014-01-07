@@ -25,7 +25,7 @@
 using namespace std;
 
 PyFunction::PyFunction(PyCode& theCode, map<string,PyObject*>& theGlobals, PyObject* closure) :
-        code(theCode), globals(theGlobals)
+        PyCallable(), code(theCode), globals(theGlobals)
 {
     PyTuple* tuple = (PyTuple*) closure;
     
@@ -58,10 +58,6 @@ PyObject* PyFunction::__call__(vector<PyObject*>* args) {
 
 PyType* PyFunction::getType() {
     return PyTypes[PyFunctionType];
-}
-
-bool PyFunction::allowableArgCount(int count) {
-    return count == code.getArgCount();
 }
 
 string PyFunction::callName() {

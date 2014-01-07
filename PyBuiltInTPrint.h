@@ -29,13 +29,12 @@ public:
     PyBuiltInTPrint(const PyBuiltInTPrint& orig);
     virtual ~PyBuiltInTPrint();
     PyType* getType();
-    PyObject* __call__(vector<PyObject*>* args);
     bool allowableArgCount(int count);
     string callName();
     string toString();
     
-private:
-
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 };
 
 #endif	/* PYBUILTINTPRINT_H */

@@ -24,8 +24,14 @@
 #include <sstream>
 using namespace std;
 
-PyList::PyList(vector<PyObject*>* lst) {
+PyList::PyList(vector<PyObject*>* lst) : PyObject() {
     data = *lst;
+   
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyList::__getitem__);
+    dict["__setitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyList::__setitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyList::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyList::__iter__);
+    dict["append"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyList::append);
 }
 
 PyList::~PyList() {
@@ -67,7 +73,7 @@ PyObject* PyList::getVal(int index) {
 
 PyObject* PyList::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on list.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -83,7 +89,7 @@ PyObject* PyList::__getitem__(vector<PyObject*>* args) {
 
 PyObject* PyList::__setitem__(vector<PyObject*>* args) {
     if (args->size() != 2) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __setitem__ method on list.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 2 arguments, got " + args->size());
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -100,10 +106,18 @@ PyObject* PyList::__setitem__(vector<PyObject*>* args) {
 }
 
 PyObject* PyList::__len__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyInt(data.size());
 }
 
 PyObject* PyList::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyListIterator(this);
 }
 

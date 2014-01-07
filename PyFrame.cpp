@@ -189,8 +189,7 @@ PyObject* PyFrame::execute() {
                     //Please note that the line below depends on the cmp_op 
                     //array and it should be initialized to all comparison operators. This list will 
                     //need to expand at some point. The cmp_op array is at the top of this module.
-                    selfType = u->getType();
-                    w = selfType->call(cmp_op[operand], u, args);
+                    w = u->callMethod(cmp_op[operand], args);
                     try {
                         delete args;
                     } catch (...) {
@@ -287,8 +286,7 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    selfType = u->getType();
-                    w = selfType->call("__add__", u, args);
+                    w = u->callMethod("__add__", args);
                     opStack->push(w);
                     try {
                         delete args;
@@ -302,8 +300,7 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    selfType = u->getType();
-                    w = selfType->call("__sub__", u, args);
+                    w = u->callMethod("__sub__", args);
                     opStack->push(w);
                     try {
                         delete args;
@@ -317,8 +314,7 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    selfType = u->getType();
-                    w = selfType->call("__mul__", u, args);
+                    w = u->callMethod("__mul__", args);
                     opStack->push(w);
                     try {
                         delete args;
@@ -332,8 +328,7 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    selfType = u->getType();
-                    w = selfType->call("__truediv__", u, args);
+                    w = u->callMethod("__truediv__", args);
                     opStack->push(w);
                     try {
                         delete args;
@@ -347,8 +342,7 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    selfType = u->getType();
-                    w = selfType->call("__floordiv__", u, args);
+                    w = u->callMethod("__floordiv__", args);
                     opStack->push(w);
                     try {
                         delete args;
@@ -361,8 +355,7 @@ PyObject* PyFrame::execute() {
                 case GET_ITER:
                     u = safetyPop();
                     args = new vector<PyObject*>();
-                    selfType = u->getType();
-                    v = selfType->call("__iter__", u, args);
+                    v = u->callMethod("__iter__", args);
                     opStack->push(v);
                     try {
                         delete args;
@@ -382,9 +375,8 @@ PyObject* PyFrame::execute() {
                 case FOR_ITER:
                     u = safetyPop();
                     args = new vector<PyObject*>();
-                    selfType = u->getType();
                     try {
-                        v = selfType->call("__next__", u, args);
+                        v = u->callMethod("__next__", args);
                         opStack->push(u);
                         opStack->push(v);
                     } catch (PyException* ex) {
@@ -404,7 +396,6 @@ PyObject* PyFrame::execute() {
 
                 case CALL_FUNCTION:
                     args = new vector<PyObject*>();
-
                     //NOTE: Arguments are added backwards because they are popped
                     //off the stack in reverse order. 
                     for (i = 0; i < operand; i++) {
@@ -415,16 +406,10 @@ PyObject* PyFrame::execute() {
 
                     if (u->isCallable()) {
                         fun = (PyCallable*) u;
-
-                        if (!(fun->allowableArgCount(operand))) {
-                            throw new PyException(PYWRONGARGCOUNTEXCEPTION, "Invalid number of arguments for function call of " + fun->callName());
-                        }
-
                     } else {
                         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to execute CALL_FUNCTION on a non-Callable Object of type " + u->getType()->toString());
                     }
-                    selfType = u->getType();
-                    v = selfType->call("__call__", u, args);
+                    v = u->callMethod("__call__", args);
                     opStack->push(v);
                     try {
                         delete args;
@@ -446,8 +431,7 @@ PyObject* PyFrame::execute() {
                     args = new vector<PyObject*>();
                     args->push_back(u);
 
-                    selfType = v->getType();
-                    w = selfType->call("__getitem__", v, args);
+                    w = v->callMethod("__getitem__", args);
                     opStack->push(w);
                     delete args;
                     break;
@@ -460,8 +444,7 @@ PyObject* PyFrame::execute() {
                     args->push_back(u); // the index
                     args->push_back(w); // the item
                     
-                    selfType = v->getType();
-                    w = selfType->call("__setitem__", v, args); // None is returned
+                    w = v->callMethod("__setitem__", args); // None is returned
                     delete w;
                     delete args;
                     break;
@@ -550,7 +533,7 @@ PyObject* PyFrame::execute() {
                 case MAKE_CLOSURE:
                     u = safetyPop();
                     v = safetyPop();
-                    w = (*((PyCode*) u), globals, v);
+                    w = new PyFunction(*((PyCode*) u), globals, v);
                     opStack->push(w);
                     break;
 
@@ -628,13 +611,10 @@ PyObject* PyFrame::execute() {
                     break;
 
                 case DELETE_FAST:
-                    //The purpose of this instruction is a bit tricky. If an 
-                    //exception happens during the handling of another 
-                    //exception, the exception's variable reference will be 
-                    //pointing at the first exception. We set it to None
-                    //here to allow the garbage collector to collect its space.
-                   
-                    locals[code.getLocals()[operand]] = new PyNone();
+                    //The purpose of this instruction is not well understood.
+                    //According to the definition it deletes the local 
+                    //variable found at index operand.
+                    delete locals[code.getLocals()[operand]];
                     break;
 
                 default:

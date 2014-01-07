@@ -32,13 +32,14 @@ public:
     string toString();
     bool getVal();
 
-    PyObject* __float__(vector<PyObject*>* args);
-    PyObject* __int__(vector<PyObject*>* args);
-    PyObject* __bool__(vector<PyObject*>* args);
-    PyObject* __eq__(vector<PyObject*>* args);
-private:
+
+protected:
     bool val;
 
+    virtual PyObject* __float__(vector<PyObject*>* args);
+    virtual PyObject* __int__(vector<PyObject*>* args);
+    virtual PyObject* __bool__(vector<PyObject*>* args);
+    virtual PyObject* __eq__(vector<PyObject*>* args);
 };
 
 #endif	/* PYBOOL_H */

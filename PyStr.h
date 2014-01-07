@@ -32,6 +32,9 @@ public:
     PyType* getType();
     string toString();
     PyStr* charAt(int index);
+
+protected:
+    string val;
     
     PyObject* __add__(vector<PyObject*>* args);
     PyObject* __str__(vector<PyObject*>* args);
@@ -45,10 +48,6 @@ public:
     PyObject* __getitem__(vector<PyObject*>* args);
     PyObject* __len__(vector<PyObject*>* args);
     PyObject* __iter__(vector<PyObject*>* args);
-
-private:
-    string val;
-
 };
 
 #endif	/* PYSTR_H */

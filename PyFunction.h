@@ -35,17 +35,16 @@ public:
     PyFunction(PyCode& code, map<string,PyObject*>& globals, PyObject* closure);
     virtual ~PyFunction();
     PyType* getType();
-    
-    PyObject* __call__(vector<PyObject*>* args);
     bool allowableArgCount(int count);
     string toString();
     string callName();
-    
-    
+     
 private:
     PyCode& code;
     map<string,PyObject*>& globals;
     map<string,PyCell*> cellvars;
+    
+    PyObject* __call__(vector<PyObject*>* args);
 };
 
 #endif	/* PYFUNCTION_H */

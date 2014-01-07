@@ -22,7 +22,7 @@
 #include <sstream>
 using namespace std;
 
-PyAttr::PyAttr(PyObject* self, string method) {
+PyAttr::PyAttr(PyObject* self, string method) : PyCallable() {
     this->self = self;
     this->method = method;
 }
@@ -37,34 +37,17 @@ PyType* PyAttr::getType() {
     return PyTypes[PyBuiltInType];
 }
 
-bool PyAttr::allowableArgCount(int count) {
-    PyType* type = self->getType();
-    
-    int argcount = type->getArgCount(method);
-    
-    return (argcount == 0) || (argcount-1 == count);
-}
-
 string PyAttr::callName() {
     return method;
 }
 
 PyObject* PyAttr::__call__(vector<PyObject*>* args) {
-    PyType* type = self->getType();
-    
-    return type->call(method,self,args);
+    return self->callMethod(method,args);
 }
 
-PyObject* PyAttr::__type__(vector<PyObject*>* args) {
-    return PyTypes[PyBuiltInType];
-}
 
 string PyAttr::toString() {
     ostringstream s;
     s << "<built-in method " << method << " of " << self->getType()->toString() << " object at " << this << ">";
     return s.str();
-}
-
-PyObject* PyAttr::__str__(vector<PyObject*>* args) {
-    return new PyStr(toString());
 }

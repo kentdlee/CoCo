@@ -27,14 +27,13 @@ public:
     PyBuiltInLen();
     PyBuiltInLen(const PyBuiltInLen& orig);
     virtual ~PyBuiltInLen();
-    
     PyType* getType();
-    PyObject* __call__(vector<PyObject*>* args);
     bool allowableArgCount(int count);
     string callName();
     string toString();
-private:
-
+    
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 };
 
 #endif	/* PYBUILTINLEN_H */

@@ -65,15 +65,17 @@ public:
         PyType* getType();
         PyObject* getTraceBack();
         void printTraceBack();
-        PyObject* __excmatch__(vector<PyObject*>* args);
+
         
-private:
+protected:
 	/* This is only here for debugging purposes. The exception type should be
 	 * the second field within the object if the first field indicates an exception.
 	 */
 	int exceptionType;
         PyObject* val;
         vector<PyFrame*> traceback;
+        
+        virtual PyObject* __excmatch__(vector<PyObject*>* args);
 };
 
 const int PYEXCEPTION = 1;

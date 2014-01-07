@@ -23,7 +23,7 @@
 using namespace std;
 
 
-PyBuiltInPrint::PyBuiltInPrint() {
+PyBuiltInPrint::PyBuiltInPrint() : PyCallable() {
 }
 
 PyBuiltInPrint::PyBuiltInPrint(const PyBuiltInPrint& orig) {
@@ -45,8 +45,7 @@ PyObject* PyBuiltInPrint::__call__(vector<PyObject*>* args) {
     
     for (int i=0;i<args->size();i++) {
         x = (*args)[i];
-        PyType* selfType = x->getType();
-        w = selfType->call("__str__", x, strargs);
+        w = x->callMethod("__str__", strargs);
         output = w->toString() + output;
         
         if (i < args->size()-1) {
@@ -57,10 +56,6 @@ PyObject* PyBuiltInPrint::__call__(vector<PyObject*>* args) {
     cout << output << endl;
     
     return new PyNone();
-}
-
-bool PyBuiltInPrint::allowableArgCount(int count) {
-    return true;
 }
 
 string PyBuiltInPrint::callName() {

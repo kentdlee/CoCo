@@ -29,13 +29,13 @@ public:
     virtual ~PyRangeIterator();
     PyType* getType();
     string toString();
-    
-    PyObject* __iter__(vector<PyObject*>* args);
-    PyObject* __next__(vector<PyObject*>* args);
-    
-private:
+   
+protected:
     PyRange* rangeObj;
     int index;
+    
+    virtual PyObject* __iter__(vector<PyObject*>* args);
+    virtual PyObject* __next__(vector<PyObject*>* args);
     
 };
 

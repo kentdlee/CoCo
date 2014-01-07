@@ -23,7 +23,7 @@
 #include <sstream>
 using namespace std;
 
-PyBuiltInInput::PyBuiltInInput() {
+PyBuiltInInput::PyBuiltInInput() : PyCallable() {
 }
 
 PyBuiltInInput::PyBuiltInInput(const PyBuiltInInput& orig) {
@@ -42,8 +42,11 @@ PyObject* PyBuiltInInput::__call__(vector<PyObject*>* args) {
     string input;
     char buffer[256];
 
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     x = (*args)[0];
-
 
     if (x->getType()->typeId() != PyStrType) {
         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid argument to input(): Expected str, found " + x->getType()->toString());
@@ -65,10 +68,6 @@ PyObject* PyBuiltInInput::__call__(vector<PyObject*>* args) {
     s << buffer;
 
     return new PyStr(s.str());
-}
-
-bool PyBuiltInInput::allowableArgCount(int count) {
-    return count == 1;
 }
 
 string PyBuiltInInput::callName() {

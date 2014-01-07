@@ -11,7 +11,7 @@
  * 
  * Description:
  * Most of the types in CoCo are instances of this class. The exceptions are
- * range objects are exception objects. All other types of objects share a 
+ * range objects and exception objects. All other types of objects share a 
  * common behavior and are instances of PyType. The main.cpp file contains 
  * the code that creates the type instances. There is one instance of each
  * different type of CoCo value. For instance, there is one instance of PyType
@@ -29,8 +29,6 @@
 #include <map>
 #include <vector>
 using namespace std;
-
-typedef PyObject* (PyObject::*PyFun)(vector<PyObject*>*);
 
 enum PyTypeId {
     PyTypeType,
@@ -59,24 +57,18 @@ class PyType : public PyCallable {
 public:
     PyType(string typeString, PyTypeId id);
     virtual ~PyType();
-    void addFun(string name, PyFun fun, int numargs);
-    PyFun getFun(string name);
-    int getArgCount(string name);
-    PyObject* call(string name, PyObject* self, vector<PyObject*>* args);
     string toString();
     PyType* getType();
     PyTypeId typeId();
-    bool allowableArgCount(int count);
     string callName();
-    PyObject* __call__(vector<PyObject*>* args);
-    PyObject* __str__(vector<PyObject*>* args);
-    PyObject* __type__(vector<PyObject*>* args);
-    
-private:
+   
+protected:
     string typeString;
     PyTypeId index;
-    map<string, PyFun> dict;
-    map<string, int> argcount;
+    
+    virtual PyObject* __call__(vector<PyObject*>* args);
+    virtual PyObject* __str__(vector<PyObject*>* args);
+    virtual PyObject* __type__(vector<PyObject*>* args);
 };
 
 extern map<PyTypeId, PyType*> PyTypes;

@@ -28,8 +28,19 @@
 #include <sstream>
 using namespace std;
 
-PyStr::PyStr(string s) {
+PyStr::PyStr(string s) : PyObject() {
     val = s;
+    
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__add__);
+    dict["__float__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__float__);
+    dict["__int__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__int__);
+    dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__bool__);
+    dict["__funlist__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__funlist__);
+    dict["__eq__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__eq__);
+    dict["split"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::split);
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__iter__);
 }
 
 PyStr::PyStr(const PyStr& orig) {
@@ -40,6 +51,10 @@ PyStr::~PyStr() {
 }
 
 PyObject* PyStr::__add__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyStr* arg = (PyStr*) (*args)[0];
     return new PyStr(this->val + arg->val);
 }
@@ -49,6 +64,10 @@ PyObject* PyStr::__str__(vector<PyObject*>* args) {
 }
 
 PyObject* PyStr::__float__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     double x;
     try {
         istringstream in(this->toString());
@@ -61,6 +80,10 @@ PyObject* PyStr::__float__(vector<PyObject*>* args) {
 }
 
 PyObject* PyStr::__int__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     int x;
     try {
         istringstream in(this->toString());
@@ -73,6 +96,10 @@ PyObject* PyStr::__int__(vector<PyObject*>* args) {
 }
 
 PyObject* PyStr::__bool__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     if (this->toString() == "")
         return new PyBool(false);
 
@@ -80,6 +107,9 @@ PyObject* PyStr::__bool__(vector<PyObject*>* args) {
 }
 
 PyObject* PyStr::__eq__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
     PyStr* arg = (PyStr*) (*args)[0];
     
     if (this->toString() == arg->toString())
@@ -90,7 +120,6 @@ PyObject* PyStr::__eq__(vector<PyObject*>* args) {
 
 PyObject* PyStr::__funlist__(vector<PyObject*>* args) {
     int k;
-    
     
     PyFunList* result = new PyFunList();
     
@@ -163,7 +192,7 @@ PyObject* PyStr::split(vector<PyObject*>* args) {
 
 PyObject* PyStr::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on str.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -183,9 +212,17 @@ PyObject* PyStr::__getitem__(vector<PyObject*>* args) {
 
 
 PyObject* PyStr::__len__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyInt(val.size());
 }
 
 PyObject* PyStr::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyStrIterator(this);
 }

@@ -28,10 +28,6 @@ PyRangeType::PyRangeType(string typeString, PyTypeId id) : PyType(typeString, id
 PyRangeType::~PyRangeType() {
 }
 
-bool PyRangeType::allowableArgCount(int count) {
-    return count == 1 || count == 2 || count == 3;
-}
-
 PyObject* PyRangeType::__call__(vector<PyObject*>* args) {
     //cerr << "In range() with " << args->size() << " args to given to range." <<  endl;
      

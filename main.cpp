@@ -32,11 +32,11 @@
  * functions to the language. See PyBuiltInPrint and PyBuiltInInput for examples.
  * 
  * The magic methods are handled by dynamically binding the names of magic methods 
- * to virtual function pointers in the PyObject class. Through the use of virtual 
- * functions any subclass of PyObject may choose to implement any of the magic 
- * methods it desires. Calling magic methods is done through the call method for
- * the type of an object. All operations that are valid on an object are determined
- * by the type of that object.
+ * to virtual function pointers in a map called dict that is declared in the 
+ * PyObject class. Through the use of virtual functions any subclass of PyObject 
+ * may choose to implement any of the magic methods it desires. Calling magic 
+ * methods is done through the callMethod method of the object. All operations 
+ * that are valid on an object are determined by the object itself.
  * 
  * The CoCo VM assumes that a main function will be defined because code execution
  * begins with the main function in this version of the CoCo VM. The subset of Python 
@@ -195,185 +195,62 @@ map<PyTypeId, PyType*> initTypes() {
     PyType* typeType = new PyType("type", PyTypeType);
     types[PyTypeType] = typeType;
 
-    typeType->addFun("__type__", &PyObject::__type__, 1);
-    typeType->addFun("__call__", &PyObject::__call__, 0);
-    typeType->addFun("__str__", &PyObject::__str__, 1);
-
     PyType* noneType = new PyType("NoneType", PyNoneType);
     types[PyNoneType] = noneType;
-
-    noneType->addFun("__type__", &PyObject::__type__, 1);
-    noneType->addFun("__str__", &PyObject::__str__, 1);
 
     PyType* boolType = new PyType("bool", PyBoolType);
     types[PyBoolType] = boolType;
 
-    boolType->addFun("__type__", &PyObject::__type__, 1);
-    boolType->addFun("__eq__", &PyObject::__eq__, 2);
-    boolType->addFun("__str__", &PyObject::__str__, 1);
-    boolType->addFun("__int__", &PyObject::__int__, 1);
-    boolType->addFun("__float__", &PyObject::__float__, 1);
-    boolType->addFun("__bool__", &PyObject::__bool__, 1);
-
     PyType* intType = new PyType("int", PyIntType);
     types[PyIntType] = intType;
-
-    intType->addFun("__type__", &PyObject::__type__, 1);
-    intType->addFun("__add__", &PyObject::__add__, 2);
-    intType->addFun("__sub__", &PyObject::__sub__, 2);
-    intType->addFun("__mul__", &PyObject::__mul__, 2);
-    intType->addFun("__floordiv__", &PyObject::__floordiv__, 2);
-    intType->addFun("__truediv__", &PyObject::__truediv__, 2);
-    intType->addFun("__eq__", &PyObject::__eq__, 2);
-    intType->addFun("__lt__", &PyObject::__lt__, 2);
-    intType->addFun("__gt__", &PyObject::__gt__, 2);
-    intType->addFun("__le__", &PyObject::__le__, 2);
-    intType->addFun("__ge__", &PyObject::__ge__, 2);
-    intType->addFun("__str__", &PyObject::__str__, 1);
-    intType->addFun("__int__", &PyObject::__int__, 1);
-    intType->addFun("__float__", &PyObject::__float__, 1);
-    intType->addFun("__bool__", &PyObject::__bool__, 1);
 
     PyType* floatType = new PyType("float", PyFloatType);
     types[PyFloatType] = floatType;
 
-    floatType->addFun("__type__", &PyObject::__type__, 1);
-    floatType->addFun("__add__", &PyObject::__add__, 2);
-    floatType->addFun("__str__", &PyObject::__str__, 1);
-    floatType->addFun("__int__", &PyObject::__int__, 1);
-    floatType->addFun("__float__", &PyObject::__float__, 1);
-    floatType->addFun("__bool__", &PyObject::__bool__, 1);
-
     PyType* strType = new PyType("str", PyStrType);
     types[PyStrType] = strType;
-
-    strType->addFun("__type__", &PyObject::__type__, 1);
-    strType->addFun("__add__", &PyObject::__add__, 2);
-    strType->addFun("__str__", &PyObject::__str__, 1);
-    strType->addFun("__int__", &PyObject::__int__, 1);
-    strType->addFun("__funlist__", &PyObject::__funlist__, 1);
-    strType->addFun("__float__", &PyObject::__float__, 1);
-    strType->addFun("__bool__", &PyObject::__bool__, 1);
-    strType->addFun("__iter__", &PyObject::__iter__, 1);
-    strType->addFun("__len__", &PyObject::__len__, 1);
-    strType->addFun("__eq__", &PyObject::__eq__, 2);
-    strType->addFun("__getitem__", &PyObject::__getitem__, 2);
-    strType->addFun("split", &PyObject::split, 1);
 
     PyType* functionType = new PyType("function", PyFunctionType);
     types[PyFunctionType] = functionType;
 
-    functionType->addFun("__type__", &PyObject::__type__, 1);
-    functionType->addFun("__call__", &PyObject::__call__, 0);
-    functionType->addFun("__str__", &PyObject::__str__, 1);
-
     PyType* builtinType = new PyType("builtin_function_or_method", PyBuiltInType);
     types[PyBuiltInType] = builtinType;
-
-    builtinType->addFun("__type__", &PyObject::__type__, 1);
-    builtinType->addFun("__call__", &PyObject::__call__, 0);
-    builtinType->addFun("__str__", &PyObject::__str__, 1);
 
     PyType* rangeType = new PyRangeType("range", PyRangeTypeId);
     types[PyRangeTypeId] = rangeType;
 
-    rangeType->addFun("__type__", &PyObject::__type__, 1);
-    rangeType->addFun("__str__", &PyObject::__str__, 1);
-    rangeType->addFun("__iter__", &PyObject::__iter__, 1);
-    rangeType->addFun("__len__", &PyObject::__len__, 1);
-    rangeType->addFun("__getitem__", &PyObject::__getitem__, 2);
-
     PyType* exceptionType = new PyExceptionType("Exception", PyExceptionTypeId);
     types[PyExceptionTypeId] = exceptionType;
-
-    exceptionType->addFun("__type__", &PyObject::__type__, 1);
-    exceptionType->addFun("__str__", &PyObject::__str__, 1);
-    exceptionType->addFun("__excmatch__", &PyObject::__excmatch__, 2);
 
     PyType* rangeIteratorType = new PyType("range_iterator", PyRangeIteratorType);
     types[PyRangeIteratorType] = rangeIteratorType;
 
-    rangeIteratorType->addFun("__type__", &PyObject::__type__, 1);
-    rangeIteratorType->addFun("__str__", &PyObject::__str__, 1);
-    rangeIteratorType->addFun("__iter__", &PyObject::__iter__, 1);
-    rangeIteratorType->addFun("__next__", &PyObject::__next__, 1);
-
     PyType* listType = new PyType("list", PyListType);
     types[PyListType] = listType;
-
-    listType->addFun("__type__", &PyObject::__type__, 1);
-    listType->addFun("__str__", &PyObject::__str__, 1);
-    listType->addFun("__iter__", &PyObject::__iter__, 1);
-    listType->addFun("__len__", &PyObject::__len__, 1);
-    listType->addFun("__getitem__", &PyObject::__getitem__, 2);
-    listType->addFun("__setitem__", &PyObject::__setitem__, 3);
-    listType->addFun("append", &PyObject::append, 2);
 
     PyType* funListType = new PyType("funlist", PyFunListType);
     types[PyFunListType] = funListType;
 
-    funListType->addFun("__type__", &PyObject::__type__, 1);
-    funListType->addFun("__str__", &PyObject::__str__, 1);
-    funListType->addFun("__iter__", &PyObject::__iter__, 1);
-    funListType->addFun("__len__", &PyObject::__len__, 1);
-    funListType->addFun("__getitem__", &PyObject::__getitem__, 2);
-    funListType->addFun("__add__", &PyObject::__add__, 2);
-    funListType->addFun("head", &PyObject::head, 1);
-    funListType->addFun("tail", &PyObject::tail, 1);
-    funListType->addFun("concat", &PyObject::concat, 1);
-
     PyType* tupleType = new PyType("tuple", PyTupleType);
     types[PyTupleType] = tupleType;
-
-    tupleType->addFun("__type__", &PyObject::__type__, 1);
-    tupleType->addFun("__str__", &PyObject::__str__, 1);
-    tupleType->addFun("__iter__", &PyObject::__iter__, 1);
-    tupleType->addFun("__len__", &PyObject::__len__, 1);
-    tupleType->addFun("__getitem__", &PyObject::__getitem__, 2);
 
     PyType* listIteratorType = new PyType("list_iterator", PyListIteratorType);
     types[PyListIteratorType] = listIteratorType;
 
-    listIteratorType->addFun("__type__", &PyObject::__type__, 1);
-    listIteratorType->addFun("__str__", &PyObject::__str__, 1);
-    listIteratorType->addFun("__iter__", &PyObject::__iter__, 1);
-    listIteratorType->addFun("__next__", &PyObject::__next__, 1);
-
     listIteratorType = new PyType("funlist_iterator", PyFunListIteratorType);
     types[PyFunListIteratorType] = listIteratorType;
-
-    listIteratorType->addFun("__type__", &PyObject::__type__, 1);
-    listIteratorType->addFun("__str__", &PyObject::__str__, 1);
-    listIteratorType->addFun("__iter__", &PyObject::__iter__, 1);
-    listIteratorType->addFun("__next__", &PyObject::__next__, 1);
 
     PyType* tupleIteratorType = new PyType("tuple_iterator", PyTupleIteratorType);
     types[PyTupleIteratorType] = tupleIteratorType;
 
-    tupleIteratorType->addFun("__type__", &PyObject::__type__, 1);
-    tupleIteratorType->addFun("__str__", &PyObject::__str__, 1);
-    tupleIteratorType->addFun("__iter__", &PyObject::__iter__, 1);
-    tupleIteratorType->addFun("__next__", &PyObject::__next__, 1);
-
     PyType* strIteratorType = new PyType("str_iterator", PyStrIteratorType);
     types[PyStrIteratorType] = strIteratorType;
-
-    strIteratorType->addFun("__type__", &PyObject::__type__, 1);
-    strIteratorType->addFun("__str__", &PyObject::__str__, 1);
-    strIteratorType->addFun("__iter__", &PyObject::__iter__, 1);
-    strIteratorType->addFun("__next__", &PyObject::__next__, 1);
 
     PyType* codeType = new PyType("code", PyCodeType);
     types[PyCodeType] = codeType;
 
-    codeType->addFun("__type__", &PyObject::__type__, 1);
-    codeType->addFun("__str__", &PyObject::__str__, 1);
-
     PyType* cellType = new PyType("cell", PyCellType);
     types[PyCellType] = cellType;
-
-    cellType->addFun("__type__", &PyObject::__type__, 1);
-    cellType->addFun("__str__", &PyObject::__str__, 1);
 
     return types;
 }
@@ -469,9 +346,7 @@ int main(int argc, char* argv[]) {
 
 
         vector<PyObject*>* args = new vector<PyObject*>();
-
-        PyType* selfType = globals["main"]->getType();
-        PyObject* result = selfType->call("__call__", globals["main"], args);
+        PyObject* result = globals["main"]->callMethod("__call__", args);
 
     } catch (PyException* ex) {
         cerr << "\n\n";

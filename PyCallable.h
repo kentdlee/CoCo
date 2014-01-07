@@ -16,12 +16,11 @@
  * instance of this class can ever be created, which is the definition of an
  * abstract base class. 
  * 
- * The allowableArgCount method is called by PyFrame when a CALL_FUNCTION
- * instruction is about to occur. The CALL_FUNCTION instruction has an operand
- * indicating the number of arguments to the instruction. The instruction
- * expects there to be operand many arguments on the top of the operand 
- * stack. Just below the arguments is the callable object. The object is popped
- * and if the number of arguments is not allowable, an exception is raised.
+ * The CALL_FUNCTION instruction has an operand indicating the number of 
+ * arguments to the instruction. The instruction expects there to be operand 
+ * many arguments on the top of the operand stack. Just below the arguments 
+ * is the callable object. The object is popped and if the number of arguments 
+ * is not allowable, an exception is raised.
  * 
  * The isCallable method is first declared in PyObject. The PyObject class
  * returns false for the isCallable method. The PyCallable class overrides this 
@@ -46,11 +45,11 @@ public:
     PyCallable();
     PyCallable(const PyCallable& orig);
     virtual ~PyCallable();
-    virtual bool allowableArgCount(int count) = 0;
     bool isCallable() const;
     virtual string callName() = 0;
     
-private:
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 
 };
 

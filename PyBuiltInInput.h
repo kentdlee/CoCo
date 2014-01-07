@@ -28,13 +28,13 @@ public:
     PyBuiltInInput();
     PyBuiltInInput(const PyBuiltInInput& orig);
     virtual ~PyBuiltInInput();
-    
     PyType* getType();
-    PyObject* __call__(vector<PyObject*>* args);
+
     bool allowableArgCount(int count);
     string callName();
     string toString();
-private:
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 
 };
 

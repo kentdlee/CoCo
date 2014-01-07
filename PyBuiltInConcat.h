@@ -30,14 +30,13 @@ public:
     PyBuiltInConcat();
     PyBuiltInConcat(const PyBuiltInConcat& orig);
     virtual ~PyBuiltInConcat();
-    
     PyType* getType();
-    PyObject* __call__(vector<PyObject*>* args);
     bool allowableArgCount(int count);
     string callName();
     string toString();
-private:
-
+    
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 };
 
 

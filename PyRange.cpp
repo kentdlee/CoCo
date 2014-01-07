@@ -24,10 +24,14 @@
 #include <sstream>
 using namespace std;
 
-PyRange::PyRange(int start, int stop, int increment) {
+PyRange::PyRange(int start, int stop, int increment) : PyObject() {
     this->start = start;
     this->stop = stop;
     this->increment = increment;
+    
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__iter__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__len__);
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__getitem__);
 }
 
 PyRange::~PyRange() {
@@ -55,7 +59,7 @@ string PyRange::toString() {
 
 PyObject* PyRange::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Invalid number of arguments for __getitem__ of range object.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
     
     PyInt* indexObj = (PyInt*) (*args)[0];

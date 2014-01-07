@@ -36,10 +36,9 @@ public:
     PyRangeType(string typeString, PyTypeId id);
     virtual ~PyRangeType();
     bool allowableArgCount(int count);
-    PyObject* __call__(vector<PyObject*>* args);
     
-private:
-
+protected:
+    virtual PyObject* __call__(vector<PyObject*>* args);
 };
 
 #endif	/* PYRANGETYPE_H */

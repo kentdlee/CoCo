@@ -28,14 +28,10 @@ PyExceptionType::PyExceptionType(string typeString, PyTypeId id): PyType(typeStr
 PyExceptionType::~PyExceptionType() {
 }
 
-// This method may not need to override the PyType method because it also 
-// return true for count == 1. However, PyType also at one time returned
-// true for count == 3. Can't figure out why that was needed. May have been
-// left over from a previous revision. Anyway, we'll leave this method here.
-bool PyExceptionType::allowableArgCount(int count) {
-    return count == 1;
-}
-
 PyObject* PyExceptionType::__call__(vector<PyObject*>* args) {
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     return new PyException(PYEXCEPTION,(*args)[0]);
 }

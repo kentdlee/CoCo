@@ -39,17 +39,18 @@ public:
     PyFunList* getTail();
     PyFunListElm* getElm(); /* Used ONLY by PyFunListIterator (should be friend) */
     
-    PyObject* __getitem__(vector<PyObject*>* args);
-    PyObject* __len__(vector<PyObject*>* args);
-    PyObject* __iter__(vector<PyObject*>* args);
-    PyObject* __add__(vector<PyObject*>* args);
-    PyObject* head(vector<PyObject*>* args);
-    PyObject* tail(vector<PyObject*>* args);
-    PyObject* concat(vector<PyObject*>* args);
+
     
     
-private:
+protected:
     PyFunListElm* data;
+    virtual PyObject* __getitem__(vector<PyObject*>* args);
+    virtual PyObject* __len__(vector<PyObject*>* args);
+    virtual PyObject* __iter__(vector<PyObject*>* args);
+    virtual PyObject* __add__(vector<PyObject*>* args);
+    virtual PyObject* head(vector<PyObject*>* args);
+    virtual PyObject* tail(vector<PyObject*>* args);
+    virtual PyObject* concat(vector<PyObject*>* args);
 };
 
 class PyFunListElm {

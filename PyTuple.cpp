@@ -24,8 +24,12 @@
 #include <sstream>
 using namespace std;
 
-PyTuple::PyTuple(vector<PyObject*>* lst) {
+PyTuple::PyTuple(vector<PyObject*>* lst) : PyObject() {
     data = *lst;
+    
+    dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyTuple::__getitem__);
+    dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyTuple::__len__);
+    dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyTuple::__iter__);    
 }
 
 PyTuple::~PyTuple() {
@@ -70,7 +74,7 @@ PyObject* PyTuple::getVal(int index) {
 
 PyObject* PyTuple::__getitem__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments to __getitem__ method on tuple.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
     
     PyInt* intObj = (PyInt*) (*args)[0];
@@ -85,9 +89,16 @@ PyObject* PyTuple::__getitem__(vector<PyObject*>* args) {
 }
 
 PyObject* PyTuple::__len__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
     return new PyInt(data.size());
 }
 
 PyObject* PyTuple::__iter__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyTupleIterator(this);
 }

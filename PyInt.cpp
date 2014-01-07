@@ -27,8 +27,21 @@
 #include <math.h>
 using namespace std;
 
-PyInt::PyInt(int val) {
+PyInt::PyInt(int val): PyObject() {
     this->val = val;
+    dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__add__);
+    dict["__sub__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__sub__);
+    dict["__mul__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__mul__);
+    dict["__floordiv__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__floordiv__);
+    dict["__truediv__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__truediv__);
+    dict["__eq__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__eq__);
+    dict["__gt__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__gt__);
+    dict["__lt__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__lt__);
+    dict["__ge__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__ge__);
+    dict["__le__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__le__);
+    dict["__float__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__float__);
+    dict["__int__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__int__);
+    dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__bool__);
 }
 
 PyInt::PyInt(const PyInt& orig) {
@@ -48,10 +61,15 @@ int PyInt::getVal() {
     return val;
 }
 
+
 PyObject* PyInt::__add__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
 
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -69,7 +87,11 @@ PyObject* PyInt::__add__(vector<PyObject*>* args) {
 PyObject* PyInt::__sub__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
-
+    
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -88,6 +110,10 @@ PyObject* PyInt::__mul__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
 
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -108,6 +134,10 @@ PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
 
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -132,6 +162,10 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
 
+    if (args->size() != 1) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
+    }
+    
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -155,9 +189,9 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
 
 PyObject* PyInt::__eq__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid number of arguments for int equal op.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
-
+    
     //We should check the type of args[0] before casting it. 
     PyInt* other = (PyInt*) (*args)[0];
 
@@ -166,7 +200,7 @@ PyObject* PyInt::__eq__(vector<PyObject*>* args) {
 
 PyObject* PyInt::__lt__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid number of arguments for int equal op.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     //We should check the type of args[0] before casting it. 
@@ -178,7 +212,7 @@ PyObject* PyInt::__lt__(vector<PyObject*>* args) {
 
 PyObject* PyInt::__gt__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid number of arguments for int equal op.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     //We should check the type of args[0] before casting it. 
@@ -190,7 +224,7 @@ PyObject* PyInt::__gt__(vector<PyObject*>* args) {
 
 PyObject* PyInt::__le__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid number of arguments for int equal op.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     //We should check the type of args[0] before casting it. 
@@ -202,7 +236,7 @@ PyObject* PyInt::__le__(vector<PyObject*>* args) {
 
 PyObject* PyInt::__ge__(vector<PyObject*>* args) {
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Invalid number of arguments for int equal op.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     //We should check the type of args[0] before casting it. 
@@ -216,14 +250,26 @@ PyType* PyInt::getType() {
 }
 
 PyObject* PyInt::__float__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return new PyFloat(this->getVal());
 }
 
 PyObject* PyInt::__int__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     return this;
 }
 
 PyObject* PyInt::__bool__(vector<PyObject*>* args) {
+    if (args->size() != 0) {
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 0 arguments, got " + args->size());
+    }
+    
     if (this->getVal() == 0)
         return new PyBool(false);
 

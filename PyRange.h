@@ -35,14 +35,16 @@ public:
     PyRange(int start, int stop, int increment);
     virtual ~PyRange();
     PyType* getType();
-    PyObject* __iter__(vector<PyObject*>* args);
-    PyObject* __len__(vector<PyObject*>* args);
-    PyObject* __getitem__(vector<PyObject*>* args);
+
     PyObject* indexOf(int index);
     string toString();
     
-private:
+protected:
     int start, stop, increment;
+    
+    virtual PyObject* __iter__(vector<PyObject*>* args);
+    virtual PyObject* __len__(vector<PyObject*>* args);
+    virtual PyObject* __getitem__(vector<PyObject*>* args);
 
 };
 

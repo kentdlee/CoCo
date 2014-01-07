@@ -25,7 +25,7 @@
 #include <sstream>
 using namespace std;
 
-PyBuiltInFPrint::PyBuiltInFPrint() {
+PyBuiltInFPrint::PyBuiltInFPrint() : PyCallable() {
 }
 
 PyBuiltInFPrint::PyBuiltInFPrint(const PyBuiltInFPrint& orig) {
@@ -79,7 +79,7 @@ PyObject* PyBuiltInFPrint::__call__(vector<PyObject*>* args) {
     vector<PyObject*>* strargs = new vector<PyObject*>();
 
     if (args->size() != 1) {
-        throw new PyException(PYILLEGALOPERATIONEXCEPTION,"Incorrect number of arguments for fprint. Only 1 allowed, which may be a tuple.");
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,"TypeError: expected 1 arguments, got " + args->size());
     }
 
     PyObject* arg = (*args)[0];
@@ -91,10 +91,6 @@ PyObject* PyBuiltInFPrint::__call__(vector<PyObject*>* args) {
     cout << output;
 
     return this;
-}
-
-bool PyBuiltInFPrint::allowableArgCount(int count) {
-    return true;
 }
 
 string PyBuiltInFPrint::callName() {
