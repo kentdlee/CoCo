@@ -57,14 +57,14 @@ using namespace std;
 class PyException: public PyObject {
 public:
 	PyException(int exceptType, PyObject* val);
-        PyException(int exceptType, string message);
+    PyException(int exceptType, string message);
 	virtual ~PyException();
 	int getExceptionType();
-        void tracebackAppend(PyFrame* frame);
+    void tracebackAppend(PyFrame* frame);
 	string toString();
-        PyType* getType();
-        PyObject* getTraceBack();
-        void printTraceBack();
+    PyType* getType();
+    PyObject* getTraceBack();
+    void printTraceBack();
 
         
 protected:
@@ -72,10 +72,10 @@ protected:
 	 * the second field within the object if the first field indicates an exception.
 	 */
 	int exceptionType;
-        PyObject* val;
-        vector<PyFrame*> traceback;
+    PyObject* val;
+    vector<PyFrame*> traceback;
         
-        virtual PyObject* __excmatch__(vector<PyObject*>* args);
+    virtual PyObject* __excmatch__(vector<PyObject*>* args);
 };
 
 const int PYEXCEPTION = 1;

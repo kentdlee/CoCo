@@ -24,7 +24,7 @@
 #include <sstream>
 using namespace std;
 
-ostream &operator <<(ostream &os, PyObject &t) {
+ostream& operator <<(ostream &os, PyObject &t) {
     return os << t.toString();
 }
 
