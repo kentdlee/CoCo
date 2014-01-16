@@ -85,10 +85,6 @@ int PyObject::getRefCount() const {
     return refCount;
 }
 
-bool PyObject::isCallable() const {
-    return false;
-}
-
 PyObject* PyObject::__str__(vector<PyObject*>* args) {
     ostringstream msg;
 

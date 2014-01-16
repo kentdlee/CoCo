@@ -55,7 +55,6 @@ public:
         void decRef();
         void incRef();
         int getRefCount() const;
-        virtual bool isCallable() const;
         
         PyObject* callMethod(string name, vector<PyObject*>* args);
        

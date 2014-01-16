@@ -45,7 +45,6 @@ public:
     PyCallable();
     PyCallable(const PyCallable& orig);
     virtual ~PyCallable();
-    bool isCallable() const;
     virtual string callName() = 0;
     
 protected:

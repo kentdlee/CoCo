@@ -403,12 +403,6 @@ PyObject* PyFrame::execute() {
                         args->push_back(u);
                     }
                     u = safetyPop();
-
-                    if (u->isCallable()) {
-                        fun = (PyCallable*) u;
-                    } else {
-                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to execute CALL_FUNCTION on a non-Callable Object of type " + u->getType()->toString());
-                    }
                     v = u->callMethod("__call__", args);
                     opStack->push(v);
                     try {
