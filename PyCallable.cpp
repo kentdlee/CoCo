@@ -27,7 +27,3 @@ PyCallable::PyCallable(const PyCallable& orig) {
 
 PyCallable::~PyCallable() {
 }
-
-PyObject* PyCallable::__call__(vector<PyObject*>* args) {
-    throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal call of Callable Base Class");
-}

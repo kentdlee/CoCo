@@ -47,7 +47,7 @@ public:
     virtual ~PyCallable();
     
 protected:
-    virtual PyObject* __call__(vector<PyObject*>* args);
+    virtual PyObject* __call__(vector<PyObject*>* args) = 0;
 
 };
 
