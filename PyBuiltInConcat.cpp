@@ -55,10 +55,6 @@ PyObject* PyBuiltInConcat::__call__(vector<PyObject*>* args) {
     return x->callMethod("concat",callArgs);
 }
 
-string PyBuiltInConcat::callName() {
-    return "concat";
-}
-
 string PyBuiltInConcat::toString() {
-    return callName();
+    return "concat";
 }

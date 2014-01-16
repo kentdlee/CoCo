@@ -94,10 +94,6 @@ PyObject* PyBuiltInFPrint::__call__(vector<PyObject*>* args) {
     return this;
 }
 
-string PyBuiltInFPrint::callName() {
-    return "fprint";
-}
-
 string PyBuiltInFPrint::toString() {
-    return callName();
+    return "fprint";
 }

@@ -54,10 +54,6 @@ PyObject* PyBuiltInLen::__call__(vector<PyObject*>* args) {
     return x->callMethod("__len__",callArgs);
 }
 
-string PyBuiltInLen::callName() {
-    return "len";
-}
-
 string PyBuiltInLen::toString() {
-    return callName();
+    return "len";
 }

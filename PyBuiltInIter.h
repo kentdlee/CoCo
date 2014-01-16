@@ -32,7 +32,6 @@ public:
     PyType* getType();
 
     bool allowableArgCount(int count);
-    string callName();
     string toString();
 protected:
     virtual PyObject* __call__(vector<PyObject*>* args);

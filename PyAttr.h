@@ -31,7 +31,6 @@ public:
     PyAttr(PyObject* self, string method);
     virtual ~PyAttr();
     bool allowableArgCount(int count);
-    virtual string callName();
 
     PyType* getType();
     string toString();

@@ -113,10 +113,6 @@ PyObject* PyBuiltInTPrint::__call__(vector<PyObject*>* args) {
     return new PyNone();
 }
 
-string PyBuiltInTPrint::callName() {
-    return "tprint";
-}
-
 string PyBuiltInTPrint::toString() {
-    return callName();
+    return "tprint";
 }

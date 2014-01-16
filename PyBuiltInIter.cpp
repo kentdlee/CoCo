@@ -52,10 +52,6 @@ PyObject* PyBuiltInIter::__call__(vector<PyObject*>* args) {
     return result;
 }
 
-string PyBuiltInIter::callName() {
-    return "iter";
-}
-
 string PyBuiltInIter::toString() {
-    return callName();
+    return "iter";
 }

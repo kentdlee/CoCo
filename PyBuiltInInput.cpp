@@ -72,10 +72,6 @@ PyObject* PyBuiltInInput::__call__(vector<PyObject*>* args) {
     return new PyStr(s.str());
 }
 
-string PyBuiltInInput::callName() {
-    return "input";
-}
-
 string PyBuiltInInput::toString() {
-    return callName();
+    return "input";
 }

@@ -153,7 +153,7 @@ void sigHandler(int signum) {
     cerr << "*********************************************************" << endl;
     cerr << "            An Uncaught Exception Occurred" << endl;
     cerr << "*********************************************************" << endl;
-    cerr << "The exception was:\n";
+    cerr << "Signal: ";
     switch (signum) {
         case SIGABRT:
             cerr << "Program Execution Aborted" << endl;
@@ -353,7 +353,7 @@ int main(int argc, char* argv[]) {
         cerr << "*********************************************************" << endl;
         cerr << "            An Uncaught Exception Occurred" << endl;
         cerr << "*********************************************************" << endl;
-        cerr << "The exception was: " << ex->toString() << endl;
+        cerr << ex->toString() << endl;
         cerr << "---------------------------------------------------------" << endl;
         cerr << "              The Exception's Traceback" << endl;
         cerr << "---------------------------------------------------------" << endl;
@@ -361,7 +361,7 @@ int main(int argc, char* argv[]) {
         cerr << "*********************************************************" << endl;
         cerr << "            An Uncaught Exception Occurred (See Above) " << endl;
         cerr << "*********************************************************" << endl;
-        cerr << "The exception was: " << ex->toString() << endl;        
+        cerr << ex->toString() << endl;        
         cerr << "*********************************************************" << endl;
     } 
 

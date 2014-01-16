@@ -30,7 +30,6 @@ public:
     virtual ~PyBuiltInPrint();
     PyType* getType();
     bool allowableArgCount(int count);
-    string callName();
     string toString();
     
 private:

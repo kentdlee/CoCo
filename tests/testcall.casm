@@ -1,0 +1,8 @@
+Function: main/0
+Constants: None, 5
+Globals: print
+BEGIN
+          LOAD_CONST                     1
+          CALL_FUNCTION                  0
+          RETURN_VALUE             
+END

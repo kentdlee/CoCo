@@ -1,0 +1,9 @@
+Function: main/0
+Constants: None, 5, 0
+Globals: print
+BEGIN
+          LOAD_CONST                     1
+          LOAD_CONST                     2
+          BINARY_TRUE_DIVIDE 
+          RETURN_VALUE             
+END

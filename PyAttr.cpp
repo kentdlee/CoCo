@@ -37,9 +37,6 @@ PyType* PyAttr::getType() {
     return PyTypes[PyBuiltInType];
 }
 
-string PyAttr::callName() {
-    return method;
-}
 
 PyObject* PyAttr::__call__(vector<PyObject*>* args) {
     return self->callMethod(method,args);

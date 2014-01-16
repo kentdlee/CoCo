@@ -152,13 +152,13 @@ PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
         case PyIntType:
             x = (PyInt*) arg;
             if (x->val == 0)
-                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Division By Zero Error");
+                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
             return new PyFloat(this->val / x->val);
 
         case PyFloatType:
             y = (PyFloat*) arg;
             if (y->getVal() == 0)
-                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Division By Zero Error");
+                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
             return new PyFloat(this->val / y->getVal());
 
         default:
@@ -182,13 +182,13 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
         case PyIntType:
             x = (PyInt*) arg;
             if (x->val == 0)
-                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Division By Zero Error");
+                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
             return new PyInt(this->val / x->val);
 
         case PyFloatType:
             y = (PyFloat*) arg;
             if (y->getVal() == 0)
-                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Division By Zero Error");
+                throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
 
             return new PyFloat(floor(this->val / y->getVal()));
 
