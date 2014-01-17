@@ -41,7 +41,7 @@ template<class T>
 class __PyStackElement {
 public:
 	__PyStackElement(T element);
-        virtual ~__PyStackElement();
+    virtual ~__PyStackElement();
 
 	T object;
 	__PyStackElement<T>* next;
@@ -57,13 +57,12 @@ public:
 	void push(T object);
 	T top();
 	bool isEmpty();
-        string toString();
-        int getCount();
+    string toString();
+    int getCount();
 
 private:
 	__PyStackElement<T>* tos;
-        int count;
-
+    int count;
 };
 
 
@@ -110,12 +109,12 @@ T PyStack<T>::pop() {
 		__PyStackElement<T>* elem = tos;
 		T val = elem->object;
 		tos = tos->next;
-                // The following line is needed to be able 
-                // to delete elem without deleting the rest
-                // of the stack. 
-                elem->next = NULL; 
+        // The following line is needed to be able 
+        // to delete elem without deleting the rest
+        // of the stack. 
+        elem->next = NULL; 
 		delete elem;
-                count --;
+        count --;
 		return val;
 	}
 
@@ -127,7 +126,7 @@ void PyStack<T>::push(T object) {
 	__PyStackElement<T>* elem = new __PyStackElement<T>(object);
 	elem->next = tos;
 	tos = elem;
-        count++;
+    count++;
 }
 
 template <class T>
@@ -154,7 +153,7 @@ __PyStackElement<T>::__PyStackElement(T obj) {
 
 template <class T>
 __PyStackElement<T>::~__PyStackElement() {
-    	if (next != NULL) {
+    if (next != NULL) {
 		try {
 			delete next;
 		} catch (...) {}
