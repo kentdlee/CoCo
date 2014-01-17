@@ -92,8 +92,10 @@ vector<PyCode*>* PyParser::parse() {
     }
 }
 
-PyParser::PyParser(PyScanner* in) {
-    this->in = in;
+PyParser::PyParser(string filename) {
+    istream* stream = new ifstream(filename);
+    this->in = new PyScanner(stream);
+
 }
 
 PyParser::PyParser(const PyParser& orig) {

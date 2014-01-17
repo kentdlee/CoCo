@@ -280,11 +280,8 @@ int main(int argc, char* argv[]) {
     }
 
     try {
-        istream* in = new ifstream(filename);
 
-        PyScanner* scan = new PyScanner(in);
-
-        PyParser* parser = new PyParser(scan);
+        PyParser* parser = new PyParser(filename);
 
         vector<PyCode*>* code = parser->parse();
 

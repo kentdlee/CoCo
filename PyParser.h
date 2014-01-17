@@ -29,7 +29,7 @@ using namespace std;
 
 class PyParser {
 public:
-    PyParser(PyScanner* in);
+    PyParser(string filename);
     PyParser(const PyParser& orig);
     virtual ~PyParser();
     vector<PyCode*>* parse();
