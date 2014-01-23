@@ -158,8 +158,6 @@ __PyStackElement<T>::~__PyStackElement() {
 			delete next;
 		} catch (...) {}
 	}
-        
-
 }
 
 #endif /* PYSTACK_H_ */

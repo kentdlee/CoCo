@@ -79,7 +79,7 @@ PyToken* PyScanner::getToken() {
                 line = lineCount;
                 if (isLetter(c)) state = 1;
                 else if (isDigit(c)) state = 2;
-                else if (c == '-') state = 2;
+                else if (c == '-') state = 11;
                 else if (c == ':') state = 3;
                 else if (c == ',') state = 4;
                 else if (c == SINGLE_QUOTE) state = 6;
@@ -197,6 +197,13 @@ PyToken* PyScanner::getToken() {
                 foundOne = true;
                 type = PYRIGHTPARENTOKEN;
                 break;
+            case 11: 
+                if (isDigit(c)) 
+                    state = 2;
+                else {
+                    type = PYBADTOKEN;
+                    foundOne = true;                    
+                }
 
         }
 

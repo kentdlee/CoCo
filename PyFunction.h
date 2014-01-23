@@ -32,7 +32,7 @@ using namespace std;
 
 class PyFunction : public PyCallable {
 public:
-    PyFunction(PyCode& code, map<string,PyObject*>& globals, PyObject* closure);
+    PyFunction(PyCode& code, map<string,PyObject*>& globals, PyObject* env);
     virtual ~PyFunction();
     PyType* getType();
     bool allowableArgCount(int count);

@@ -25,10 +25,10 @@
 #include <sstream>
 using namespace std;
 
-PyFunction::PyFunction(PyCode& theCode, map<string,PyObject*>& theGlobals, PyObject* closure) :
+PyFunction::PyFunction(PyCode& theCode, map<string,PyObject*>& theGlobals, PyObject* env) :
         PyCallable(), code(theCode), globals(theGlobals)
 {
-    PyTuple* tuple = (PyTuple*) closure;
+    PyTuple* tuple = (PyTuple*) env;
     
     for (int i = 0; i < theCode.getFreeVars().size(); i++) {
         cellvars[theCode.getFreeVars()[i]] = (PyCell*)tuple->getVal(i);

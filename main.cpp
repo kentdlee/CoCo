@@ -48,43 +48,7 @@
  * the module level would provide the appearance of module level variables 
  * with very little work. 
  * 
- * This project as given to students does not contain support for several interesting
- * aspects of Python. These project ideas are outlined below. Not all projects 
- * need or should be done in a semester class, but they are interesting nevertheless.
- * 
- * 1. Support can be added for various constructs in Python like while loops, for loops.
- * 
- * 2. The break statement in while loops and for loops must exit a loop. In that case
- * a Block Stack is needed to keep track of exit points when a loop is entered. This
- * is why the setup loop and pop block instructions exist. 
- * 
- * 3. Support for List objects could be added. In that case, for loops could also be 
- * added since they iterate over sequences (either strings or lists).
- * 
- * 4. The range function could be implemented. In this case a new range object should
- * be created to allow for lazy evaluation of the range. 
- * 
- * 5. Support for nested functions can be added. This entails identifying free variables
- * in a function and those variables that are accessed from an inner scope. Variables 
- * accessed from an inner scope must be pointed to by a new object called a PyCell object
- * because the inner function must be able to change the reference of the variable that 
- * points to the value because changes within the inner scope are still in effect when
- * the inner function returns. This is called a Closure. A closure is just a list of 
- * PyCell objects for the free variables of a called inner function. The PyFunction
- * object then is created and a closure is made (setting the closure field of the function)
- * so when the function is called the PyCells are accessible in the inner function.
- * 
- * This also means that the outer function must create the variables accessed in an inner
- * scope by creating PyCell objects too. This is necessary since both the inner and the outer
- * function code will dereference the cell objects in the same way. 
- * 
- * To implement this the grammar has to change slightly. The disassemple.py function handles
- * nested functions and shows the grammar format (see the sample program in disassembly.py). 
- * The scanner needs to change to recognize parens (I believe this is the only change to the
- * scanner). The grammar needs to allow nested functions. Items of code(x) can appear in the 
- * constants and can be handled by placing the code object in the constants list. 
- * 
- * 6. Garbage Collection can be implemented using reference counting. This is how Python
+ * Garbage Collection can be implemented using reference counting. This is how Python
  * implements garbage collection. Each new object and new reference to an object increments
  * the reference count. When a function is not needed its reference count is deleted. When
  * the reference count reaches zero it is deleted. This can be handled with a new 
@@ -95,7 +59,7 @@
  * will be since all reference counts in the cycle would be non-zero. Does not happen 
  * often in practice though. 
  * 
- * 7. Through the use of additional built in functions support for Files could be added. In addition,
+ * Through the use of additional built in functions support for Files could be added. In addition,
  * math functions could be implemented. There are many extensions to the language that 
  * could be implemented by adding additional built in functions. Some very interesting 
  * uses of the language are possible. For example, some form of turtle graphics might be possible. 
@@ -183,6 +147,7 @@ void sigHandler(int signum) {
         cerr << callStack[k]->getCode().prettyString("",true);
     } 
     exit(0);
+
 }
 
 map<PyTypeId, PyType*> PyTypes;
