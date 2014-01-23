@@ -21,14 +21,14 @@
 #include "PyFrame.h"
 #include "PyList.h"
 #include "PyBool.h"
-#include <map>
+#include <unordered_map>
 #include <sstream>
 using namespace std;
 
 struct names {
 
-    static map<int, string> create_map() {
-        map<int, string> m;
+    static unordered_map<int, string> create_map() {
+        unordered_map<int, string> m;
         m[PYEXCEPTION] = "Exception";
         m[PYEMPTYSTACKEXCEPTION] = "EmptyStackException";
         m[PYPARSEEXCEPTION] = "ParseException";
@@ -41,7 +41,7 @@ struct names {
     }
 };
 
-static map<int, string> excnames = names::create_map();
+static unordered_map<int, string> excnames = names::create_map();
 
 PyException::PyException(int exception, PyObject* v) : PyObject(), exceptionType(exception), val(v) {
     dict["__excmatch__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyException::__excmatch__);

@@ -26,7 +26,7 @@
 
 #include "PyCallable.h"
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -71,7 +71,7 @@ protected:
     virtual PyObject* __type__(vector<PyObject*>* args);
 };
 
-extern map<PyTypeId, PyType*> PyTypes;
+extern unordered_map<PyTypeId, PyType*, std::hash<int> > PyTypes;
 
 #endif	/* PYTYPE_H */
 

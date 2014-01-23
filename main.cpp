@@ -94,7 +94,7 @@
 #include "PyException.h"
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <unordered_map>
 #include <csignal>
 #include <stdlib.h>
 using namespace std;
@@ -150,12 +150,12 @@ void sigHandler(int signum) {
 
 }
 
-map<PyTypeId, PyType*> PyTypes;
+unordered_map<PyTypeId, PyType*, std::hash<int> > PyTypes;
 bool verbose = false;
 
-map<PyTypeId, PyType*> initTypes() {
+unordered_map<PyTypeId, PyType*, std::hash<int> > initTypes() {
 
-    map<PyTypeId, PyType*> types;
+    unordered_map<PyTypeId, PyType*, std::hash<int> > types;
 
     PyType* typeType = new PyType("type", PyTypeType);
     types[PyTypeType] = typeType;
@@ -272,7 +272,7 @@ int main(int argc, char* argv[]) {
         /*  This code will run the interpreter once the parser reads the data.
          */
 
-        map<string, PyObject*> globals;
+        unordered_map<string, PyObject*> globals;
 
         globals["print"] = new PyBuiltInPrint();
         globals["fprint"] = new PyBuiltInFPrint();

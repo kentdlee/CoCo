@@ -20,10 +20,10 @@
 #include "PyException.h"
 #include <iostream>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
-bool create_map(map<string, PyOpCode>& m) {
+bool create_map(unordered_map<string, PyOpCode>& m) {
     m["STOP_CODE"] = STOP_CODE;
     m["NOP"] = NOP;
     m["POP_TOP"] = POP_TOP;
@@ -134,10 +134,10 @@ bool create_map(map<string, PyOpCode>& m) {
     return true;
 }
 
-map<string, PyOpCode> OpCodeMap;
+unordered_map<string, PyOpCode> OpCodeMap;
 bool dummy = create_map(OpCodeMap);
 
-bool create_arg_map(map<string, int>& m) {
+bool create_arg_map(unordered_map<string, int>& m) {
     m["STOP_CODE"] = 0;
     m["NOP"] = 0;
     m["POP_TOP"] = 0;
@@ -248,7 +248,7 @@ bool create_arg_map(map<string, int>& m) {
     return true;
 }
 
-map<string, int> ArgMap;
+unordered_map<string, int> ArgMap;
 bool dummy2 = create_arg_map(ArgMap);
 
 const char* opcodeNames[] = {
