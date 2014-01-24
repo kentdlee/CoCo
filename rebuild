@@ -27,5 +27,6 @@ echo "AC_INIT([coco], [1.0], [kentdlee@gmail.com])" > configure.ac
 echo "AM_INIT_AUTOMAKE([-Wall -Werror foreign])" >> configure.ac
 echo "AC_PROG_CXX" >> configure.ac
 echo "AC_CONFIG_FILES([Makefile])" >> configure.ac
+echo "CXXFLAGS='$CXXFLAGS -std=c++11'" >> configure.ac
 echo "AC_OUTPUT" >> configure.ac
 autoreconf --force --install
