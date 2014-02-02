@@ -12,5 +12,5 @@ def main():
         print(e)
         print(type(e))
  
-#main()   
-disassembler.disassemble(main)
+main()   
+#disassembler.disassemble(main)

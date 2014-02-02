@@ -25,19 +25,27 @@
 
 using namespace std;
 
-PyExceptionType::PyExceptionType(string typeString, PyTypeId id): PyType(typeString, id) {
+PyExceptionType::PyExceptionType(string typeString, PyTypeId id) : PyType(typeString, id) {
 }
 
 PyExceptionType::~PyExceptionType() {
 }
 
 PyObject* PyExceptionType::__call__(vector<PyObject*>* args) {
-	ostringstream msg;
+    ostringstream msg;
+    int exctype;
 
-    if (args->size() != 1) {
-        msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+    if (args->size() > 2) {
+        msg << "TypeError: expected 1 or 2 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION, msg.str());
     }
+
+    if (args->size() == 1)
+        return new PyException(PYEXCEPTION, (*args)[0]);
+
+    if ((*args)[0]->getType()->typeId() != PyIntType)
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "TypeError: expected int for first argument to Exception.");
     
-    return new PyException(PYEXCEPTION,(*args)[0]);
+    exctype = ((PyInt*) (*args)[0])->getVal();
+    return new PyException(exctype, (*args)[1]);
 }
