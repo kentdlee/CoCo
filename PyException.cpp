@@ -90,7 +90,20 @@ PyObject* PyException::__excmatch__(vector<PyObject*>* args) {
     
     PyObject* arg = (*args)[0];
     
-    return new PyBool(this->getType() == arg);
+    //If the arg was the Exception Type, then see if
+    //the exception value was PYEXCEPTION.
+    if (this->getType() == arg)
+        return new PyBool(this->getExceptionType() == PYEXCEPTION);
+    
+    //Otherwise, the object passed was an Exception Object. Match
+    //the exception values in that case. 
+    if (this->getType() != arg->getType())
+        msg << "TypeError: Exception match type mismatch. Expected Exception Object got " << arg->toString();
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION,msg.str());
+        
+    PyException* other = (PyException*) arg;
+    
+    return new PyBool(this->getExceptionType() == other->getExceptionType());
 }
 
 PyObject* PyException::getTraceBack() {   
