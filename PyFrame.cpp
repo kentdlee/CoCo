@@ -47,8 +47,8 @@ const char* cmp_op[12] = {
 };
 
 PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
-        map<string, PyObject*>& theGlobals, const vector<PyObject*>& theConstants,
-        map<string, PyCell*>& theCellVars) :
+        unordered_map<string, PyObject*>& theGlobals, const vector<PyObject*>& theConstants,
+        unordered_map<string, PyCell*>& theCellVars) :
         code(theCode), globals(theGlobals), 
         consts(theConstants), cellvars(theCellVars) {
 

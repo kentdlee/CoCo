@@ -39,14 +39,14 @@
 #include "PyStack.h"
 #include "PyCell.h"
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
 class PyFrame : public PyObject {
 public:
-    PyFrame(const PyCode& code, vector<PyObject*>* args, map<string,PyObject*>& globals, 
-            const vector<PyObject*>& consts, map<string,PyCell*>& cellvars);
+    PyFrame(const PyCode& code, vector<PyObject*>* args, unordered_map<string,PyObject*>& globals, 
+            const vector<PyObject*>& consts, unordered_map<string,PyCell*>& cellvars);
     virtual ~PyFrame();
     
     PyObject* execute();
@@ -57,9 +57,9 @@ public:
 private:
     const PyCode& code;
     int PC;
-    map<string,PyObject*> locals;
-    map<string,PyObject*>& globals;
-    map<string,PyCell*>& cellvars;
+    unordered_map<string,PyObject*> locals;
+    unordered_map<string,PyObject*>& globals;
+    unordered_map<string,PyCell*>& cellvars;
     const vector<PyObject*>& consts;
     
     PyStack<PyObject*>* opStack;

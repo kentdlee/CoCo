@@ -25,7 +25,7 @@
 #include <sstream>
 using namespace std;
 
-PyFunction::PyFunction(PyCode& theCode, map<string,PyObject*>& theGlobals, PyObject* env) :
+PyFunction::PyFunction(PyCode& theCode, unordered_map<string,PyObject*>& theGlobals, PyObject* env) :
         PyCallable(), code(theCode), globals(theGlobals)
 {
     PyTuple* tuple = (PyTuple*) env;

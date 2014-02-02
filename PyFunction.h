@@ -26,13 +26,13 @@
 #include "PyCell.h"
 #include "PyTuple.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <string>
 using namespace std;
 
 class PyFunction : public PyCallable {
 public:
-    PyFunction(PyCode& code, map<string,PyObject*>& globals, PyObject* env);
+    PyFunction(PyCode& code, unordered_map<string,PyObject*>& globals, PyObject* env);
     virtual ~PyFunction();
     PyType* getType();
     bool allowableArgCount(int count);
@@ -41,8 +41,8 @@ public:
      
 private:
     PyCode& code;
-    map<string,PyObject*>& globals;
-    map<string,PyCell*> cellvars;
+    unordered_map<string,PyObject*>& globals;
+    unordered_map<string,PyCell*> cellvars;
     
     PyObject* __call__(vector<PyObject*>* args);
 };

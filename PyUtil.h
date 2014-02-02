@@ -20,13 +20,13 @@
 
 #include "PyObject.h"
 #include <iostream>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
 
 template <typename K, typename V>
-void printMap(const map<K, V>& m) {
-	typename map<K,V>::const_iterator it;
+void printMap(const unordered_map<K, V>& m) {
+	typename unordered_map<K,V>::const_iterator it;
 
         
         for (it=m.begin();it != m.end(); it++) {

@@ -39,7 +39,7 @@
 #define PYOBJECT_H_
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -51,15 +51,15 @@ public:
 	PyObject();
 	virtual ~PyObject();
 	virtual PyType* getType();
-        virtual string toString();
-        void decRef();
-        void incRef();
-        int getRefCount() const;
+   virtual string toString();
+   void decRef();
+   void incRef();
+   int getRefCount() const;
         
-        PyObject* callMethod(string name, vector<PyObject*>* args);
+   PyObject* callMethod(string name, vector<PyObject*>* args);
        
 protected:
-    map <string, PyObject* (PyObject::*)(vector<PyObject*>*)> dict;        
+    unordered_map<string, PyObject* (PyObject::*)(vector<PyObject*>*)> dict;        
     int refCount;
     
     virtual PyObject* __str__(vector<PyObject*>* args);

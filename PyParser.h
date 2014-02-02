@@ -23,7 +23,7 @@
 #include "PyCode.h"
 #include "PyObject.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
 
@@ -38,7 +38,7 @@ private:
     
     // These two fields are used when determining the addresses of 
     // labels within the code that is generated for jump instructions.
-    map<string,int> target;
+    unordered_map<string,int> target;
     int index;
     
     vector<PyCode*>* PyAssemblyProg();
