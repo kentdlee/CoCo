@@ -43,8 +43,7 @@ PyStr::PyStr(string s) : PyObject() {
     dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__iter__);
 }
 
-PyStr::PyStr(const PyStr& orig) {
-    val = orig.val;
+PyStr::PyStr(const PyStr& orig) : PyStr(orig.val) {
 }
 
 PyStr::~PyStr() {

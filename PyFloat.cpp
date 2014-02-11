@@ -33,8 +33,7 @@ PyFloat::PyFloat(double f) : PyObject() {
     dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__bool__);
 }
 
-PyFloat::PyFloat(const PyFloat& orig) {
-    val = orig.val;
+PyFloat::PyFloat(const PyFloat& orig) : PyFloat(orig.val) {
 }
 
 PyFloat::~PyFloat() {

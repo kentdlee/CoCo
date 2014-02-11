@@ -35,11 +35,11 @@ PyBool::PyBool() : PyObject() {
     dict["__eq__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyBool::__eq__);
 }
 
-PyBool::PyBool(bool val) {
+PyBool::PyBool(bool val) : PyBool() {
     this->val = val;
 }
 
-PyBool::PyBool(const PyBool& orig) {
+PyBool::PyBool(const PyBool& orig) : PyBool() {
     val = orig.val;
 }
 

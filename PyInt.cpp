@@ -44,8 +44,7 @@ PyInt::PyInt(int val): PyObject() {
     dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyInt::__bool__);
 }
 
-PyInt::PyInt(const PyInt& orig) {
-    this->val = orig.val;
+PyInt::PyInt(const PyInt& orig) : PyInt(orig.val) {
 }
 
 PyInt::~PyInt() {
