@@ -1,0 +1,52 @@
+Function: main/0
+Constants: None, "Please enter an integer: ", 0, 1, 2, "You didn't enter an integer."
+Locals: size, lst, ex
+Globals: int, input, list, range, print, Exception
+BEGIN
+          SETUP_EXCEPT             label00
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_GLOBAL                    2
+          LOAD_GLOBAL                    3
+          LOAD_CONST                     2
+          LOAD_FAST                      0
+          LOAD_CONST                     3
+          BINARY_ADD               
+          LOAD_CONST                     4
+          CALL_FUNCTION                  3
+          CALL_FUNCTION                  1
+          STORE_FAST                     1
+          LOAD_GLOBAL                    4
+          LOAD_FAST                      1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          POP_BLOCK                
+          JUMP_FORWARD             label03
+label00:  DUP_TOP                  
+          LOAD_GLOBAL                    5
+          COMPARE_OP                    10
+          POP_JUMP_IF_FALSE        label02
+          POP_TOP                  
+          STORE_FAST                     2
+          POP_TOP                  
+          SETUP_FINALLY            label01
+          LOAD_GLOBAL                    4
+          LOAD_CONST                     5
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          POP_BLOCK                
+          POP_EXCEPT               
+          LOAD_CONST                     0
+label01:  LOAD_CONST                     0
+          STORE_FAST                     2
+          DELETE_FAST                    2
+          END_FINALLY              
+          JUMP_FORWARD             label03
+label02:  END_FINALLY              
+label03:  LOAD_CONST                     0
+          RETURN_VALUE             
+END

@@ -283,6 +283,7 @@ int main(int argc, char* argv[]) {
         globals["float"] = PyTypes[PyFloatType];
         globals["str"] = PyTypes[PyStrType];
         globals["funlist"] = PyTypes[PyFunListType];
+        globals["list"] = PyTypes[PyListType];
         globals["type"] = PyTypes[PyTypeType];
         globals["bool"] = PyTypes[PyBoolType];
         globals["range"] = PyTypes[PyRangeTypeId];

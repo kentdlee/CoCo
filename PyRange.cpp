@@ -19,6 +19,7 @@
 #include "PyRange.h"
 #include "PyInt.h"
 #include "PyType.h"
+#include "PyList.h"
 #include "PyRangeIterator.h"
 #include "PyException.h"
 #include <sstream>
@@ -32,6 +33,7 @@ PyRange::PyRange(int start, int stop, int increment) : PyObject() {
     dict["__iter__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__iter__);
     dict["__len__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__len__);
     dict["__getitem__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__getitem__);
+    dict["__list__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyRange::__list__);
 }
 
 PyRange::~PyRange() {
@@ -83,4 +85,17 @@ PyObject* PyRange::indexOf(int index) {
     }
     
     return new PyInt(start + increment*index);
+}
+
+PyObject* PyRange::__list__(vector<PyObject*>* args) {
+    vector<PyObject*>* largs = new vector<PyObject*>();
+    
+    int k;
+    for (k=start;k<stop;k=k+increment) {
+        largs->push_back(new PyInt(k));
+    }
+    
+    return new PyList(largs);
+    
+    
 }

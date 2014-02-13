@@ -45,7 +45,7 @@ protected:
     virtual PyObject* __iter__(vector<PyObject*>* args);
     virtual PyObject* __len__(vector<PyObject*>* args);
     virtual PyObject* __getitem__(vector<PyObject*>* args);
-
+    virtual PyObject* __list__(vector<PyObject*>* args);
 };
 
 #endif	/* PYRANGE_H */

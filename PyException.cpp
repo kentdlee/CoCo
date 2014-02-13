@@ -90,10 +90,10 @@ PyObject* PyException::__excmatch__(vector<PyObject*>* args) {
     
     PyObject* arg = (*args)[0];
     
-    //If the arg was the Exception Type, then see if
-    //the exception value was PYEXCEPTION.
+    //If the arg was the Exception Type, then its a match because every 
+    //exception object should match the exception type.
     if (this->getType() == arg)
-        return new PyBool(this->getExceptionType() == PYEXCEPTION);
+        return new PyBool(true);
     
     //Otherwise, the object passed was an Exception Object. Match
     //the exception values in that case. 
