@@ -87,6 +87,7 @@ PyToken* PyScanner::getToken() {
                 else if (c == '/') state = 8;
                 else if (c == '(') state = 9;
                 else if (c == ')') state = 10;
+                else if (c == ';') state = 12;
                 else if (c == -1) {
                     foundOne = true;
                     type = PYEOFTOKEN;
@@ -204,7 +205,15 @@ PyToken* PyScanner::getToken() {
                     type = PYBADTOKEN;
                     foundOne = true;                    
                 }
-
+            case 12: 
+                // Comments extend to end of line and
+                // begin with a semicolon.
+                if (c == '\n' || c == -1) {
+                    colCount = -1;
+                    lineCount++;
+                    state = 0;
+                    lex = "";
+                }
         }
 
         if (!foundOne) {

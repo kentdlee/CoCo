@@ -1,3 +1,5 @@
+; This program raises an exception.
+
 Function: main/0
 Constants: None, "Hello World!"
 Locals: ex
@@ -24,7 +26,7 @@ label00:  DUP_TOP
           POP_TOP                  
           POP_BLOCK                
           POP_EXCEPT               
-          LOAD_CONST                     0
+          LOAD_CONST                     0 ; here is a comment.
 label01:  LOAD_CONST                     0
           STORE_FAST                     0
           DELETE_FAST                    0
