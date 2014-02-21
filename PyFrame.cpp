@@ -232,12 +232,12 @@ PyObject* PyFrame::execute() {
 
                 case POP_JUMP_IF_TRUE:
                     if (opStack->isEmpty()) {
-                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to pop empty operand stack in POP_JUMP_IF_FALSE.");
+                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to pop empty operand stack in POP_JUMP_IF_TRUE.");
                     }
 
                     u = safetyPop();
                     if (u->getType()->toString() != "bool") {
-                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal Operand Type for POP_JUMP_IF_FALSE");
+                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal Operand Type for POP_JUMP_IF_TRUE");
                     }
 
                     bu = (PyBool*) u;

@@ -1,5 +1,4 @@
-/* 
- * File:   PyByteCode.cpp
+/* File:   PyByteCode.cpp
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 11, 2013, 11:26 AM
