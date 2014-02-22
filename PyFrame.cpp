@@ -237,7 +237,7 @@ PyObject* PyFrame::execute() {
 
                     u = safetyPop();
                     if (u->getType()->toString() != "bool") {
-                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal Operand Type for POP_JUMP_IF_TRUE");
+                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal TOS value for POP_JUMP_IF_TRUE. Boolean value required.");
                     }
 
                     bu = (PyBool*) u;
@@ -254,7 +254,7 @@ PyObject* PyFrame::execute() {
 
                     u = safetyPop();
                     if (u->getType()->toString() != "bool") {
-                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal Operand Type for POP_JUMP_IF_FALSE");
+                        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Illegal TOS value for POP_JUMP_IF_FALSE. Boolean value required.");
                     }
 
                     bu = (PyBool*) u;
