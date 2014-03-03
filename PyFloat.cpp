@@ -40,8 +40,10 @@ PyFloat::~PyFloat() {
 }
 
 string PyFloat::toString() {
+    char buffer[50];
+    sprintf(buffer,"%1.1f",val);
     stringstream ss;
-    ss << val;
+    ss << buffer;
     return ss.str();
 }
 
