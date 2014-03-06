@@ -205,6 +205,7 @@ PyToken* PyScanner::getToken() {
                     type = PYBADTOKEN;
                     foundOne = true;                    
                 }
+                break;
             case 12: 
                 // Comments extend to end of line and
                 // begin with a semicolon.
@@ -214,6 +215,7 @@ PyToken* PyScanner::getToken() {
                     state = 0;
                     lex = "";
                 }
+                break;
         }
 
         if (!foundOne) {
