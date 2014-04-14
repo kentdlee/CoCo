@@ -10,7 +10,7 @@
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
  * 
  * Description:
- * PyCallable is an abstract base class for all callable objects in CoCo. You 
+ * PyCallable is an abstract base class for callable objects in CoCo. You 
  * can tell it is an abstract base class because allowableArgCount is set
  * to 0 in the declaration below. Setting a method to zero means that no 
  * instance of this class can ever be created, which is the definition of an
@@ -20,13 +20,7 @@
  * arguments to the instruction. The instruction expects there to be operand 
  * many arguments on the top of the operand stack. Just below the arguments 
  * is the callable object. The object is popped and if the number of arguments 
- * is not allowable, an exception is raised.
- * 
- * The isCallable method is first declared in PyObject. The PyObject class
- * returns false for the isCallable method. The PyCallable class overrides this 
- * method and returns true. This is needed so when an object is popped from 
- * the operand stack (a stack of PyObjects) it can be safely cast to a 
- * PyCallable object before calling it. 
+ * is not allowable, an exception is raised. 
  * 
  * The callName method, another abstract method, is implemented by subclasses
  * and is used if an exception is thrown to provide more information about the 
