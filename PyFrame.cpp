@@ -58,9 +58,13 @@ PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
 
     this->blockStack = new PyStack<int>();
 
-    // bind the parameter names to the arguments
+    // bind the parameter names to the arguments. Invert
+    // the order because the arguments come into the function
+    // in reverse order. 
+    int j = args->size()-1;
+
     for (int i = 0; i < args->size(); i++) {
-        locals[varnames[i]] = (*args)[i];
+        locals[varnames[i]] = (*args)[j--];
     }
 
     // bind the cellvars to their names
@@ -397,7 +401,8 @@ PyObject* PyFrame::execute() {
                 case CALL_FUNCTION:
                     args = new vector<PyObject*>();
                     //NOTE: Arguments are added backwards because they are popped
-                    //off the stack in reverse order. 
+                    //off the stack in reverse order. So the called function gets
+                    //the arguments backwards. 
                     for (i = 0; i < operand; i++) {
                         u = safetyPop();
                         args->push_back(u);
