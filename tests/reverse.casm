@@ -1,0 +1,43 @@
+Function: reverse/1
+Constants: None, 0, 1
+Locals: lst
+Globals: len, reverse
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      0
+          CALL_FUNCTION                  1
+          LOAD_CONST                     1
+          COMPARE_OP                     2
+          POP_JUMP_IF_FALSE        label00
+          BUILD_LIST                     0
+          RETURN_VALUE             
+label00:  LOAD_GLOBAL                    1
+          LOAD_FAST                      0
+          LOAD_CONST                     2
+          LOAD_CONST                     0
+          BUILD_SLICE                    2
+          BINARY_SUBSCR            
+          CALL_FUNCTION                  1
+          LOAD_FAST                      0
+          LOAD_CONST                     1
+          BINARY_SUBSCR            
+          BUILD_LIST                     1
+          BINARY_ADD               
+          RETURN_VALUE             
+END
+Function: main/0
+Constants: None, 1, 2, 3
+Globals: print, reverse
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          LOAD_CONST                     2
+          LOAD_CONST                     3
+          BUILD_LIST                     3
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END

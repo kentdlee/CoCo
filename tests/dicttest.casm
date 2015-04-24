@@ -1,0 +1,81 @@
+Function: main/0
+Constants: None, "goodbye", "hello", "cat!", "dog!", "old", "young", "hello young dog!"
+Locals: d, s, t, x, y
+Globals: split, print, keys, values
+BEGIN
+          BUILD_MAP                      0
+          STORE_FAST                     0
+          LOAD_CONST                     1
+          LOAD_FAST                      0
+          LOAD_CONST                     2
+          STORE_SUBSCR             
+          LOAD_CONST                     3
+          LOAD_FAST                      0
+          LOAD_CONST                     4
+          STORE_SUBSCR             
+          LOAD_CONST                     5
+          LOAD_FAST                      0
+          LOAD_CONST                     6
+          STORE_SUBSCR             
+          LOAD_CONST                     7
+          STORE_FAST                     1
+          LOAD_FAST                      1
+          LOAD_ATTR                      0
+          CALL_FUNCTION                  0
+          STORE_FAST                     2
+          SETUP_LOOP               label02
+          LOAD_FAST                      2
+          GET_ITER                 
+label00:  FOR_ITER                 label01
+          STORE_FAST                     3
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      3
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          JUMP_ABSOLUTE            label00
+label01:  POP_BLOCK                
+label02:  SETUP_LOOP               label05
+          LOAD_FAST                      2
+          GET_ITER                 
+label03:  FOR_ITER                 label04
+          STORE_FAST                     3
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      0
+          LOAD_FAST                      3
+          BINARY_SUBSCR            
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          JUMP_ABSOLUTE            label03
+label04:  POP_BLOCK                
+label05:  SETUP_LOOP               label08
+          LOAD_FAST                      0
+          LOAD_ATTR                      2
+          CALL_FUNCTION                  0
+          GET_ITER                 
+label06:  FOR_ITER                 label07
+          STORE_FAST                     3
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      3
+          LOAD_FAST                      0
+          LOAD_FAST                      3
+          BINARY_SUBSCR            
+          CALL_FUNCTION                  2
+          POP_TOP                  
+          JUMP_ABSOLUTE            label06
+label07:  POP_BLOCK                
+label08:  SETUP_LOOP               label11
+          LOAD_FAST                      0
+          LOAD_ATTR                      3
+          CALL_FUNCTION                  0
+          GET_ITER                 
+label09:  FOR_ITER                 label10
+          STORE_FAST                     4
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      4
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          JUMP_ABSOLUTE            label09
+label10:  POP_BLOCK                
+label11:  LOAD_CONST                     0
+          RETURN_VALUE             
+END

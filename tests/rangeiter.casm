@@ -1,0 +1,37 @@
+Function: main/0
+Constants: None, "Enter a list: ", 1, -1, -1
+Locals: x, lst, i
+Globals: input, split, range, len, print
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_FAST                      0
+          LOAD_ATTR                      1
+          CALL_FUNCTION                  0
+          STORE_FAST                     1
+          SETUP_LOOP               label02
+          LOAD_GLOBAL                    2
+          LOAD_GLOBAL                    3
+          LOAD_FAST                      1
+          CALL_FUNCTION                  1
+          LOAD_CONST                     2
+          BINARY_SUBTRACT          
+          LOAD_CONST                     3
+          LOAD_CONST                     4
+          CALL_FUNCTION                  3
+          GET_ITER                 
+label00:  FOR_ITER                 label01
+          STORE_FAST                     2
+          LOAD_GLOBAL                    4
+          LOAD_FAST                      1
+          LOAD_FAST                      2
+          BINARY_SUBSCR            
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          JUMP_ABSOLUTE            label00
+label01:  POP_BLOCK                
+label02:  LOAD_CONST                     0
+          RETURN_VALUE             
+END

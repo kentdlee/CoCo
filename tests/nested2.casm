@@ -1,0 +1,44 @@
+Function: f/1
+    Function: g/1
+    Constants: None, 1
+    Locals: y
+    FreeVars: x
+    BEGIN
+              LOAD_DEREF                 0
+              LOAD_CONST                 1
+              BINARY_ADD
+              STORE_DEREF                0
+              LOAD_DEREF                 0
+              LOAD_FAST                  0
+              BINARY_ADD               
+              RETURN_VALUE             
+    END
+Constants: None, code(g)
+Locals: x, g
+CellVars: x
+BEGIN
+          LOAD_CLOSURE                   0
+          BUILD_TUPLE                    1
+          LOAD_CONST                     1
+          MAKE_CLOSURE                   0
+          STORE_FAST                     1
+          LOAD_FAST                      1
+          LOAD_DEREF                     0
+          CALL_FUNCTION                  1
+          LOAD_DEREF                     0
+          BINARY_ADD
+          RETURN_VALUE             
+END
+Function: main/0
+Constants: None, 3
+Globals: print, f
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_CONST                     1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END

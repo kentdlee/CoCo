@@ -1,0 +1,16 @@
+Function: main/0
+Constants: None, 5, 6
+Locals: x
+Globals: __add__, print
+BEGIN
+
+          LOAD_CONST                     1
+          LOAD_ATTR                      0
+          LOAD_CONST                     2
+          CALL_FUNCTION                  1
+          STORE_FAST                     0
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      0
+          CALL_FUNCTION                  1
+          RETURN_VALUE             
+END
