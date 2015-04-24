@@ -49,10 +49,7 @@ string PyTuple::toString() {
     s << "(";
     
     for (int i=0;i<data.size();i++) {
-        if (data[i]->getType()->typeId()==PyStrType) 
-            s << "\'" << data[i]->toString() << "\'";
-        else
-            s << data[i]->toString();
+        s << data[i]->toString();
         
         if (i < data.size()-1) 
             s << ", ";
