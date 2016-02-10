@@ -22,6 +22,8 @@
 #include "PyType.h"
 #include "PyBool.h"
 #include "PyException.h"
+// Added cstdio include to compile on cygwin per request: 2/9/2016 
+#include <cstdio>
 #include <sstream>
 using namespace std;
 
